@@ -10,6 +10,7 @@ Download the [installer script](https://github.com/KEINOS/Phar_Box3_installer/bl
 $ curl -LSs https://raw.githubusercontent.com/KEINOS/Phar_Box3_installer/Box3_installer/installer.php | php
 ```
 
+Then it will fetch the latest `box.phar` file to the same directory.
 
 ## About Box3
 
