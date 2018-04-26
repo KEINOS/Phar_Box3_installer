@@ -4,13 +4,23 @@ It downloads the latest "box.phar" (The PHP archiver) from the latest release at
 
 ## How to
 
-Download the [installer script](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php) and run.
+Run the one-liner below to install `box.phar` to your current directory.
 
 ```
-$ curl -LSs https://raw.githubusercontent.com/KEINOS/Phar_Box3_installer/Box3_installer/installer.php | php
+$ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 ```
 
-Then it will fetch the latest `box.phar` file to the same directory.
+- Installer download url
+     - https://keinos.github.io/Phar_Box3_installer/installer.php
+     - [CheckSUM (SHA1)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
+     - [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+
+## What it does
+
+- It checks the environment before download.<br>(Such as PHP's ver, extension and PHP.ini settings)
+- It downloads the latest `box.phar`.
+- It checks if valid Phar.
+- Changes mod as executable.
 
 ## About Box3
 
