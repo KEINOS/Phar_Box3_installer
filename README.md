@@ -4,8 +4,11 @@ It downloads the latest "box.phar" (The PHP archiver) from the latest release at
 
 ## How to
 
-Download the [installer script](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php) and run `php installer.php`.
+Download the [installer script](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php) and run.
 
+```
+$ curl -LSs https://raw.githubusercontent.com/KEINOS/Phar_Box3_installer/Box3_installer/installer.php | php
+```
 
 
 ## About Box3
