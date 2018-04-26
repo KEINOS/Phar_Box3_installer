@@ -1,0 +1,9 @@
+{
+    "name": "Box3 Installer",
+    "short_name": "installer.php",
+    "sha1": "a1754c306e6430de4cd7aad602b9dbd781a4a5dd",
+    "size": 23170,
+    "url_master": "https:\/\/raw.githubusercontent.com\/KEINOS\/Phar_Box3_installer\/Box3_installer\/installer.php",
+    "url_short": "https:\/\/keinos.github.io\/Phar_Box3_installer\/installer.php",
+    "url_manifest": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json"
+}
