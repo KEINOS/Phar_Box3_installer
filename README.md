@@ -10,7 +10,7 @@ Run the one-liner below to install `box.phar` to your current directory.
 $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 ```
 
-![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0717.gif?0725 "How to install box.phar via installer")
+![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0730.gif)
 
 - Installer download url
      - https://keinos.github.io/Phar_Box3_installer/installer.php
