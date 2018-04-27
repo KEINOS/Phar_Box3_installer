@@ -1,7 +1,10 @@
 {
     "name": "Box3 Installer",
     "short_name": "installer.php",
+    "md5": "8e1c35003758e563bda3776975c00c05",
     "sha1": "a1754c306e6430de4cd7aad602b9dbd781a4a5dd",
+    "sha256": "7eeb9b212a4ccedfef2d854adb92282e25712a35f3e51c64136ba85fb1cb4710",
+    "sha512": "d0806143c6e0115308f4ee812b02adc4101a513a090208861dcbc93772642a40625ea8c5c9759aed2c3c1056172c6cc0a9e4f99d8db42b1e1a159d76cec241c8",
     "size": 23170,
     "url_master": "https:\/\/raw.githubusercontent.com\/KEINOS\/Phar_Box3_installer\/Box3_installer\/installer.php",
     "url_short": "https:\/\/keinos.github.io\/Phar_Box3_installer\/installer.php",
