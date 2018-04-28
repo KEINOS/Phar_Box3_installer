@@ -38,5 +38,8 @@ This script is a fork of Box2's installer and customized for Box3.
 
 - Original installer
 
-    https://box-project.github.io/box2/installer.php
+    https://github.com/box-project/box2/blob/gh-pages/installer.php
 
+## Credits
+
+All the effort and credit goes to [Box3 (humbug/box) collaborators](https://github.com/humbug/box).
