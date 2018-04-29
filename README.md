@@ -1,6 +1,14 @@
 # Installer for Box3 (humbug/box).
 
-It downloads the latest "box.phar" (The PHP archiver) from the releases page at https://github.com/humbug/box/releases .
+You can download "Box3" (`box.phar`), the PHP Archiver applicaton, manually from the [humbug/box repository](https://github.com/humbug/box)'s [releases page](https://github.com/humbug/box/releases).
+
+Though this installer does the following to help you install it as an alternative.
+
+1. It checks the minimum requirements to run `box.phar`. (It does not check all the requirements. See [Issue #4](https://github.com/KEINOS/Phar_Box3_installer/issues/4))
+2. It **downloads the latest "box.phar"** from the [head family's releases page](https://github.com/humbug/box/releases).<br>(At https://github.com/humbug/box/releases)
+1. It validates the checksum to check if the downloaded file is not curropted.
+3. It test run if it's a valid Phar.
+4. It tries to change the mode executable.
 
 ## How to
 
@@ -17,20 +25,18 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
      - [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
      - [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
-## What it does
+## What is Box?
 
-- It checks the environment before download.<br>(Such as PHP's ver, extension and PHP.ini settings)
-- It downloads the latest `box.phar`.
-- It checks if valid Phar.
-- Changes mode as executable.
+With a ["PHAR" extension](http://php.net/manual/en/intro.phar.php) enabled, you can put your entire PHP applications into a single file called a "PHAR" (PHP Archive) for easy distribution and installation. Like a "JAR" file in Java.
 
-## About Box3
+"Box" (`box.phar`) is an awesome PHP application to help you create that ".phar" file much more easily.
 
-- Box3 is a fork of the unmaintained Box2 project.
-- Box3 is mantained by [humbug/box](https://github.com/humbug) organization.
+## Box3?
 
-    - Box2 project: https://github.com/box-project/box2
-    - Box3 organization: https://github.com/humbug/box
+"[Box3](https://github.com/humbug/box)" is a fork of the unmaintained [Box2 project](https://github.com/box-project/box2). Mantained by The [humbug/box](https://github.com/humbug) organization.
+
+- Box2 project: https://github.com/box-project/box2
+- Box3 organization: https://github.com/humbug/box
 
 ## About this installer
 
