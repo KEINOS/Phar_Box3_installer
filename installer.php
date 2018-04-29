@@ -224,21 +224,28 @@ namespace
     }
 */
 
-    echo " - Checking if valid Phar...$n";
+    echo ' - Checking if valid Phar ... ';
 
     try {
         new Phar($name_app);
+        echo 'OK.', $n;
     } catch (Exception $e) {
-        echo " x The Phar is not valid.\n\n";
+        echo 'NG! The Phar is not valid.', $n;
 
         throw $e;
     }
 
-    echo " - Making Box executable...$n";
+    // `chmod` installer
+    check(
+        'Making Box executable ...',
+        'Can NOT make Box executable ...Plase change mode as executable manually.',
+        function () {
+            global $name_app;
+            return chmod($name_app, 0755);
+        }
+    );
 
-    @chmod($name_app, 0755);
-
-    echo "{$n}Box installed!$n";
+    echo $n, 'Box installed!', $n, $n;
 
     /**
      * Checks a condition, outputs a message, and exits if failed.
