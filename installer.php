@@ -66,7 +66,7 @@ namespace
         'You have a supported version of the "phar" extension.',
         'You need a newer version of the "phar" extension (>=2.0).',
         function () {
-            if(extension_loaded('phar')){
+            if(! extension_loaded('phar')){
                 return false;
             }
             $phar = new ReflectionExtension('phar');
