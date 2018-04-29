@@ -22,7 +22,7 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 - It checks the environment before download.<br>(Such as PHP's ver, extension and PHP.ini settings)
 - It downloads the latest `box.phar`.
 - It checks if valid Phar.
-- Changes mod as executable.
+- Changes mode as executable.
 
 ## About Box3
 
