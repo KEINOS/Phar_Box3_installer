@@ -6,7 +6,7 @@
 
 You can download "Box3" (`box.phar`), the PHP Archiver applicaton, manually from the [humbug/box repository](https://github.com/humbug/box)'s [releases page](https://github.com/humbug/box/releases).
 
-Though this installer does the following to help you install it as an alternative.
+Though this installer does the following to help you and provide an alternative installation.
 
 1. It checks the minimum requirements to run `box.phar`. (It does not check all the requirements. See [Issue #4](https://github.com/KEINOS/Phar_Box3_installer/issues/4))
 2. It **downloads the latest "box.phar"** from the [head family's releases page](https://github.com/humbug/box/releases).<br>(At https://github.com/humbug/box/releases)
