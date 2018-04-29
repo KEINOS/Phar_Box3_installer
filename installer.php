@@ -2,16 +2,23 @@
 /**
  * Installer for Box3 (humbug/box).
  *
- * It downloads the latest "box.phar" (The PHP archiver) from the latest
- * release at https://github.com/humbug/box/releases .
+ * It downloads the latest "box.phar" (The PHP archiver) from the releases
+ * page at https://github.com/humbug/box/releases .
  *
+ * - Issues: https://github.com/KEINOS/Phar_Box3_installer/issues
+ * - Latest download url: https://github.com/KEINOS/Phar_Box3_installer
+ * - By: KEINOS https://github.com/KEINOS/
+ *
+ * ## About Box3
  * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) by
  * https://github.com/humbug .
  *
+ * ## About this script
  * This script is a fork of Box2's installer and customized for Box3.
  *
- * - Original installer
+ * - Original installer (Box2)
  *     https://box-project.github.io/box2/installer.php
+ *
  */
 
 namespace
