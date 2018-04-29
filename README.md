@@ -1,4 +1,4 @@
-[English][[日本語](README_JA.md)]
+[English][[日本語](README_JA.md)][[Español](README_ES.md)]
 
 ---
 
