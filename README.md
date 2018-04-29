@@ -1,3 +1,7 @@
+[English][[日本語](README_JA.md)]
+
+---
+
 # Installer for Box3 (humbug/box).
 
 You can download "Box3" (`box.phar`), the PHP Archiver applicaton, manually from the [humbug/box repository](https://github.com/humbug/box)'s [releases page](https://github.com/humbug/box/releases).
