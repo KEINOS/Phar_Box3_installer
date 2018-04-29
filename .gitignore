@@ -1,2 +1,3 @@
 *.phar
 updator.php
+cache/
