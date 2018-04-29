@@ -38,7 +38,7 @@ Si la [extensión "PHAR" de PHP](http://php.net/manual/es/intro.phar.php) está 
 
 ## ¿Box3?
 
-"[Box3](https://github.com/humbug/box)" es una bifurcación del [proyecto de Box2](https://github.com/box-project/box2) sin mantenimiento. Mantenido por la organización [humbug/box](https://github.com/humbug) en GitHub.
+"[Box3](https://github.com/humbug/box)" es una bifurcación del [proyecto de Box2](https://github.com/box-project/box2) sin mantenimiento. Ahora mantenido por la organización [humbug/box](https://github.com/humbug) en GitHub.
 
 - Proyecto Box2: https://github.com/box-project/box2
 - Organización Box3: https://github.com/humbug/box
