@@ -1,6 +1,6 @@
 # Installer for Box3 (humbug/box).
 
-It downloads the latest "box.phar" (The PHP archiver) from the latest release at https://github.com/humbug/box/releases .
+It downloads the latest "box.phar" (The PHP archiver) from the releases page at https://github.com/humbug/box/releases .
 
 ## How to
 
