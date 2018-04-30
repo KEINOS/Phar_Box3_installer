@@ -10,7 +10,7 @@ El Archivador de PHP "Box3" (`box.phar`) se puede descargar si mismo de forma ma
 A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarle como una instalación alternativa.
 
 - Comprueba los requisitos mínimos para ejecutar "`box.phar`". (No verifica todos los requisitos. Consulte el [asunto #4](https://github.com/KEINOS/Phar_Box3_installer/issues/4).)
-- Se **descarga la última "`box.phar`"** des de la [página de lanzamiento de la cabeza de familia](https://github.com/humbug/box/releases). (En https://github.com/humbug/box/releases)
+- Se **descarga el más nuevo "`box.phar`"** des de la [página de lanzamiento](https://github.com/humbug/box/releases) de la cabeza de familia. (En https://github.com/humbug/box/releases)
 - Valida la suma de comprobación (el "checksum") para verificar si el archivo descargado no está curvado.
 - Se ejecuta si es un Phar válido.
 - Intenta cambiar el modo ejecutable.
