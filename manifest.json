@@ -1,24 +1,35 @@
 {
-    "name": "Box3 Installer",
-    "short_name": "installer.php",
+    "name": "Box3 Installer manifest",
     "installer": {
         "name": "installer.php",
-        "size": 23170,
+        "size": 23719,
         "hashes": {
-            "md5": "8e1c35003758e563bda3776975c00c05",
-            "sha1": "a1754c306e6430de4cd7aad602b9dbd781a4a5dd",
-            "sha256": "7eeb9b212a4ccedfef2d854adb92282e25712a35f3e51c64136ba85fb1cb4710",
-            "sha512": "d0806143c6e0115308f4ee812b02adc4101a513a090208861dcbc93772642a40625ea8c5c9759aed2c3c1056172c6cc0a9e4f99d8db42b1e1a159d76cec241c8"
+            "md5": "c07bf530cab942df5818f7503beb8ef0",
+            "sha1": "6b455156b393ad976c96876ee2ccc2ea9684251d",
+            "sha256": "f51a5992fa057af5cbc99a8964a0183fcc8a838c33f8032f5689e4f736fcea25",
+            "sha512": "81cff4613fa8697291a8904d5e02683e9e72f561653c754f12cfd07c6f9708d19587f84b3f1889d9cffcd084ba65ea7c930a867e97d9558e043b080d51790092"
         },
         "master_branch_url": "https:\/\/raw.githubusercontent.com\/KEINOS\/Phar_Box3_installer\/Box3_installer\/installer.php",
         "browser_download_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/installer.php",
         "manifest_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json"
     },
     "box_release": {
+        "3.0.0-alpha.5": {
+            "name": "box.phar",
+            "tag": "3.0.0-alpha.5",
+            "size_file": 1596497,
+            "hashes": {
+                "md5": "3665ce90af87947212a6b1ce0aeda611",
+                "sha1": "ad1c4c5ef464174c79f7989dee7eb0f70036d8f4",
+                "sha256": "fcbd3fed1babb3624943e2d59f6f9a13a8c8992f5c082f3f7481cf05b4ffb633",
+                "sha512": "3e4cc6291f2f4a16e3c52cbfa67bfa97ef5a63bce936a5d8ac2f3e8b1d6fb212629d77d25145b06f3156ce6d86dba0525738d201fdce9304f9c989524f6d045f"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.5\/box.phar"
+        },
         "3.0.0-alpha.4": {
             "name": "box.phar",
             "tag": "3.0.0-alpha.4",
-            "size": 1699375,
+            "size_file": 1699375,
             "hashes": {
                 "md5": "8450a9fa272bc9cd0593f837e64aff97",
                 "sha1": "3570cc93f0d6156da9196bc1910f2f1167566e55",
@@ -30,7 +41,7 @@
         "3.0.0-alpha.3": {
             "name": "box.phar",
             "tag": "3.0.0-alpha.3",
-            "size": 1719017,
+            "size_file": 1719017,
             "hashes": {
                 "md5": "95dd65309ede400733e1cf1749416642",
                 "sha1": "398293fb8d67ac550960f2ac99f8cb0099fb50fc",
@@ -42,7 +53,7 @@
         "3.0.0-alpha.2": {
             "name": "box.phar",
             "tag": "3.0.0-alpha.2",
-            "size": 1730396,
+            "size_file": 1730396,
             "hashes": {
                 "md5": "63cb5b7a3c417fbf8105b50775b9ff3d",
                 "sha1": "38b475958bced9ac2bf103e0bc55650b7ee33e34",

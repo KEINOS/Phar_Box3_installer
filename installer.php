@@ -2,16 +2,23 @@
 /**
  * Installer for Box3 (humbug/box).
  *
- * It downloads the latest "box.phar" (The PHP archiver) from the latest
- * release at https://github.com/humbug/box/releases .
+ * It downloads the latest "box.phar" (The PHP archiver) from the releases
+ * page at https://github.com/humbug/box/releases .
  *
+ * - Issues: https://github.com/KEINOS/Phar_Box3_installer/issues
+ * - Latest download url: https://github.com/KEINOS/Phar_Box3_installer
+ * - By: KEINOS https://github.com/KEINOS/
+ *
+ * ## About Box3
  * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) by
  * https://github.com/humbug .
  *
+ * ## About this script
  * This script is a fork of Box2's installer and customized for Box3.
  *
- * - Original installer
+ * - Original installer (Box2)
  *     https://box-project.github.io/box2/installer.php
+ *
  */
 
 namespace
@@ -66,8 +73,10 @@ namespace
         'You have a supported version of the "phar" extension.',
         'You need a newer version of the "phar" extension (>=2.0).',
         function () {
+            if(! extension_loaded('phar')){
+                return false;
+            }
             $phar = new ReflectionExtension('phar');
-
             return version_compare($phar->getVersion(), '2.0', '>=');
         }
     );
@@ -224,21 +233,28 @@ namespace
     }
 */
 
-    echo " - Checking if valid Phar...$n";
+    echo ' - Checking if valid Phar ... ';
 
     try {
         new Phar($name_app);
+        echo 'OK.', $n;
     } catch (Exception $e) {
-        echo " x The Phar is not valid.\n\n";
+        echo 'NG! The Phar is not valid.', $n;
 
         throw $e;
     }
 
-    echo " - Making Box executable...$n";
+    // `chmod` installer
+    check(
+        'Making Box executable ...',
+        'Can NOT make Box executable ...Plase change mode as executable manually.',
+        function () {
+            global $name_app;
+            return chmod($name_app, 0755);
+        }
+    );
 
-    @chmod($name_app, 0755);
-
-    echo "{$n}Box installed!$n";
+    echo $n, 'Box installed!', $n, $n;
 
     /**
      * Checks a condition, outputs a message, and exits if failed.
