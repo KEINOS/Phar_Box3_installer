@@ -14,6 +14,42 @@
         "manifest_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json"
     },
     "box_release": {
+        "3.0.0-beta.0": {
+            "name": "box.phar",
+            "tag": "3.0.0-beta.0",
+            "size_file": 1811772,
+            "hashes": {
+                "md5": "f107af11caf73f70b66b5e96344ad53c",
+                "sha1": "21fbb199d9888f549d2ab286b9f7a3fb5b2e1e3f",
+                "sha256": "89f8129c8abde001f1639b82db619ed86778834dd29259259bc3faa4c8d1b8a0",
+                "sha512": "58d05ada788fc07d29157c865d05d341d748629835685e4319aa07616ae41bfbf4617313642ea86f69083f6e077ee5d8b126e6423903d1f38745363f28a9b674"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-beta.0\/box.phar"
+        },
+        "3.0.0-alpha.7": {
+            "name": "box.phar",
+            "tag": "3.0.0-alpha.7",
+            "size_file": 1807702,
+            "hashes": {
+                "md5": "a6e556b5d3061b49fc829f87b5acc26e",
+                "sha1": "883b6024881a885db9e02a1e065a4d71e1f25673",
+                "sha256": "96fccdd874577ae156b1861ffbed1ec448cf9e3632b9fbf0e3d2fb606def2ef6",
+                "sha512": "b0fea9c0e6585bf2d68260527302c0123f8b5261c0de6d633c732477499cd263ac976fc497c3104bbbd6f538eea875158bf29dcf3deca6b55488c6a9ba5ae047"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.7\/box.phar"
+        },
+        "3.0.0-alpha.6": {
+            "name": "box.phar",
+            "tag": "3.0.0-alpha.6",
+            "size_file": 1710887,
+            "hashes": {
+                "md5": "1a4e30f0ece275955cdb0432ecf2395f",
+                "sha1": "18247f72963a2fee7a306ee62c55ae9decdaa914",
+                "sha256": "6a5e339bc01208c73a559edc26f2a6fbaca458af7b375fca2c05d20865f76f34",
+                "sha512": "4c140a29399e806c98e832e1dc8b791b893ca45f81429929bad0b1449aa5e6ce63452a35a644d7e714204ea2377e1cdc78dbf1a3eb49102744beb4374ee2f3b0"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.6\/box.phar"
+        },
         "3.0.0-alpha.5": {
             "name": "box.phar",
             "tag": "3.0.0-alpha.5",
