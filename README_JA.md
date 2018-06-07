@@ -16,6 +16,13 @@ PHP アーカイバー「Box3」（`box.phar`）自体は [humbug/box リポジ�
 
 ## How to
 
+- インストーラのダウンロードURL
+     - https://keinos.github.io/Phar_Box3_installer/installer.php
+     - [チェックサム (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
+     - [ソースコードを見る](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+
+### 簡単な方法
+
 以下のワンライナーを実行して、カレント・ディレクトリに `box.phar` をインストールします。
 
 ```
@@ -24,10 +31,14 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 
 ![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0730.gif)
 
-- インストーラのダウンロードURL
-     - https://keinos.github.io/Phar_Box3_installer/installer.php
-     - [チェックサム (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-     - [ソースコードを見る](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+### 安全な方法 （推奨）
+
+```
+php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
+php -r "if (hash_file('sha256', 'installer.php') === 'f51a5992fa057af5cbc99a8964a0183fcc8a838c33f8032f5689e4f736fcea25') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php installer.php
+php -r "unlink('installer.php');"
+```
 
 ## Boxとは
 

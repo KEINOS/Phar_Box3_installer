@@ -16,6 +16,13 @@ Though this installer does the following to help you and provide an alternative 
 
 ## How to
 
+- Installer download url
+     - https://keinos.github.io/Phar_Box3_installer/installer.php
+     - [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
+     - [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+
+### Simple way
+
 Run the one-liner below to install `box.phar` to your current directory.
 
 ```
@@ -24,10 +31,14 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 
 ![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0730.gif)
 
-- Installer download url
-     - https://keinos.github.io/Phar_Box3_installer/installer.php
-     - [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-     - [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+### Secure way (recommended)
+
+```
+php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
+php -r "if (hash_file('sha256', 'installer.php') === 'f51a5992fa057af5cbc99a8964a0183fcc8a838c33f8032f5689e4f736fcea25') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php installer.php
+php -r "unlink('installer.php');"
+```
 
 ## What is Box?
 
