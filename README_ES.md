@@ -4,7 +4,6 @@
 
 # Instalador para Box3 (humbug/box)
 
-
 El Archivador de PHP "Box3" (`box.phar`) se puede descargar si mismo de forma manual desde la [página de lanzamiento](https://github.com/humbug/box/releases) en el [repositorio de humbug/box](https://github.com/humbug/box).
 
 A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarle como una instalación alternativa.
@@ -17,10 +16,11 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 
 ## Cómo
 
--  Información y URL de descarga del instalador
-     - https://keinos.github.io/Phar_Box3_installer/installer.php
-     - [Suma de verificación (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-     - [Ver código fuente](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+### Información Básica
+
+- URL de descarga: https://keinos.github.io/Phar_Box3_installer/installer.php
+- [Suma de verificación (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
+- [Ver código fuente](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
 ### Forma simple
 

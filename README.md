@@ -16,10 +16,11 @@ Though this installer does the following to help you and provide an alternative 
 
 ## How to
 
-- Installer download url
-     - https://keinos.github.io/Phar_Box3_installer/installer.php
-     - [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-     - [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
+### Basic info
+
+- Download URL: https://keinos.github.io/Phar_Box3_installer/installer.php
+- [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
+- [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
 ### Simple way
 
