@@ -206,8 +206,7 @@ namespace
     check(
         'Application download was found',
         'No application download was found',
-        function () {
-            global $latest, $name_app;
+        function () use ($latest, $name_app) {
             $asset = $latest->assets[0];
             $has_name_app = ($asset->name === $name_app);
             $has_url_download = isset($asset->browser_download_url);
@@ -248,8 +247,7 @@ namespace
     check(
         'Making Box executable ...',
         'Can NOT make Box executable ...Plase change mode as executable manually.',
-        function () {
-            global $name_app;
+        function () use ($name_app) {
             return chmod($name_app, 0755);
         }
     );
