@@ -73,7 +73,7 @@ namespace
         'You have a supported version of the "phar" extension.',
         'You need a newer version of the "phar" extension (>=2.0).',
         function () {
-            if(! extension_loaded('phar')){
+            if (! extension_loaded('phar')) {
                 return false;
             }
             $phar = new ReflectionExtension('phar');
@@ -175,7 +175,7 @@ namespace
             'header' => 'User-Agent: humbug/box.phar downloader',
         ],
     ];
-    $context      = stream_context_create($options);    
+    $context      = stream_context_create($options);
     $release_url  = 'https://api.github.com/repos/humbug/box/releases';
     $release_json = file_get_contents($release_url, false, $context);
 
@@ -216,7 +216,7 @@ namespace
     );
 
     echo " - Downloading Box v", Dumper::toString($latest->version), " ...$n";
-    
+
     $browser_download_url = $latest->assets[0]->browser_download_url;
     file_put_contents(
         $name_app,
