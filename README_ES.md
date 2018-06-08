@@ -34,9 +34,11 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 
 ### Forma segura (recomendado)
 
+**NOTA**: Por favor, no redistribuya el siguiente código de instalación. **Cambiará en cada versión** del instalador. En lugar, enlace a [esta página](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/README_ES.md).
+
 ```
 php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
-php -r "if (hash_file('sha256', 'installer.php') === 'f51a5992fa057af5cbc99a8964a0183fcc8a838c33f8032f5689e4f736fcea25') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha256', 'installer.php') === '829f059a6cae4cdd70f910a0c724c1ea38939535bf9f6f2abbabd90311a0d51e') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php installer.php
 php -r "unlink('installer.php');"
 ```
