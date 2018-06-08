@@ -41,23 +41,36 @@ namespace
         }
     );
 
+    /* Title ---------------------------------------------------------------- */
+
+    echo $n;
+    echo "=============$n";
     echo "Box Installer$n";
-    echo "=============$n$n";
+    echo "=============$n";
+    echo $n;
+
+    /* Environment check --------------------------------------------------- */
 
     echo "Environment Check$n";
-    echo "-----------------$n$n";
+    echo "-----------------$n";
+    echo $n;
 
     echo "\"-\" indicates success.$n";
-    echo "\"*\" indicates error.$n$n";
+    echo "\"*\" indicates error.  $n";
+    echo $n;
+
+    $hasNoErrors = true; //truns false on error
 
     // check version
     check(
-        'You have a supported version of PHP (>= 5.3.3).',
+        'You have a supported min version of PHP (>= 5.3.3).',
         'You need PHP 5.3.3 or greater.',
         function () {
             return version_compare(PHP_VERSION, '5.3.3', '>=');
         }
     );
+
+    // ask whether use BOX2 or not if  =< 7.1.0
 
     // check phar extension
     check(
@@ -161,10 +174,30 @@ namespace
         );
     }
 
-    echo "{$n}Everything seems good!$n$n";
+    // ask to continue if check fail
+    if ($hasNoErrors) {
+        echo "{$n}Everything seems good!$n$n";
+    } else {
+        echo "{$n}You need to fix above error in order to use BOX3.$n";
+        echo " - Path to your php.ini: " . php_ini_loaded_file() . "$n";
+        echo $n;
+        
+        if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
+            echo "{$n}Exit BOX3 installer.$n$n";
+            
+            exit(1);
+        }
+        
+        echo "Continuing ...$n$n";
+    }
+
+    /* Download ------------------------------------------------------------- */
+
+    $hasNoErrors = true; //reset flag
 
     echo "Download$n";
-    echo "--------$n$n";
+    echo "--------$n";
+    echo $n;
 
     // Retrieve manifest
     echo " - Downloading releases...$n";
@@ -200,12 +233,13 @@ namespace
         }
     }
 
-    echo $n, "\t", 'Latest release -> ', Dumper::toString($latest->version), $n;
+    echo $n, "\t", 'Latest release -> ', Dumper::toString($latest->version);
+    echo $n, $n;
 
     $name_app = 'box.phar';
     check(
-        'Application download was found',
-        'No application download was found',
+        "Application to download \t... found",
+        "Application to download \t... NOT found",
         function () use ($latest, $name_app) {
             $asset = $latest->assets[0];
             $has_name_app = ($asset->name === $name_app);
@@ -214,13 +248,14 @@ namespace
         }
     );
 
-    echo " - Downloading Box v", Dumper::toString($latest->version), " ...$n";
+    echo " - Downloading Box v", Dumper::toString($latest->version), " ... ";
 
     $browser_download_url = $latest->assets[0]->browser_download_url;
-    file_put_contents(
+
+    echo ( file_put_contents(
         $name_app,
         file_get_contents($browser_download_url, false, $context)
-    );
+    )) ? 'OK': 'FAIL! Can not put file. Check dir permission.', $n;
 
 /*
     echo " - Checking file checksum...$n";
@@ -232,21 +267,21 @@ namespace
     }
 */
 
-    echo ' - Checking if valid Phar ... ';
+    echo " - Checking if valid Phar \t... ";
 
     try {
         new Phar($name_app);
-        echo 'OK.', $n;
+        echo 'OK', $n;
     } catch (Exception $e) {
-        echo 'NG! The Phar is not valid.', $n;
+        echo 'FAIL! The Phar is not valid.', $n;
 
         throw $e;
     }
 
     // `chmod` installer
     check(
-        'Making Box executable ...',
-        'Can NOT make Box executable ...Plase change mode as executable manually.',
+        "Making Box executable \t... OK",
+        "Making Box executable \t... FAIL! Check dir/file permission.",
         function () use ($name_app) {
             return chmod($name_app, 0755);
         }
@@ -264,9 +299,11 @@ namespace
      */
     function check($success, $failure, $condition, $exit = true)
     {
-        global $n;
+        global $n, $hasNoErrors;
 
-        if ($condition()) {
+        $result = $condition();
+
+        if ($result) {
             echo ' - ', $success, $n;
         } else {
             echo ' * ', $failure, $n;
@@ -275,6 +312,17 @@ namespace
                 exit(1);
             }
         }
+
+        $hasNoErrors = $hasNoErrors && $result;
+
+        return ($result);
+    }
+
+    function askToContinue($question, $stringToContinue)
+    {
+        echo $question . ':';
+        $stdin = trim(fgets(STDIN));
+        return $stringToContinue === $stdin;
     }
 }
 
