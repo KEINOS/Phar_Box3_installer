@@ -7,17 +7,17 @@
  *
  * - Issues: https://github.com/KEINOS/Phar_Box3_installer/issues
  * - Latest download url: https://github.com/KEINOS/Phar_Box3_installer
- * - By: KEINOS https://github.com/KEINOS/
+ * - By: KEINOS @ https://github.com/KEINOS/
  *
  * ## About Box3
- * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) by
- * https://github.com/humbug .
+ * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) mantained by
+ * https://github.com/humbug/box .
  *
  * ## About this script
  * This script is a fork of Box2's installer and customized for Box3.
  *
  * - Original installer (Box2)
- *     https://box-project.github.io/box2/installer.php
+ *     https://github.com/box-project/box2/blob/gh-pages/installer.php
  *
  */
 
