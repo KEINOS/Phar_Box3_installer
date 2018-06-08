@@ -49,7 +49,7 @@ namespace
     echo "=============$n";
     echo $n;
 
-    /* Environment check --------------------------------------------------- */
+    /* Environment check ---------------------------------------------------- */
 
     echo "Environment Check$n";
     echo "-----------------$n";
@@ -181,13 +181,13 @@ namespace
         echo "{$n}You need to fix above error in order to use BOX3.$n";
         echo " - Path to your php.ini: " . php_ini_loaded_file() . "$n";
         echo $n;
-        
+
         if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
             echo "{$n}Exit BOX3 installer.$n$n";
-            
+
             exit(1);
         }
-        
+
         echo "Continuing ...$n$n";
     }
 
