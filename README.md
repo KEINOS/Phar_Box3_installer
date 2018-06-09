@@ -14,13 +14,14 @@ Though this installer does the following to help you and provide an alternative 
 3. It test run if it's a valid Phar.
 4. It tries to change the mode executable.
 
+## Basic info
+
+- **Download:** https://keinos.github.io/Phar_Box3_installer/installer.php
+    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sig
+- **Source code:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
+- **Manifest:** https://keinos.github.io/Phar_Box3_installer/manifest.json
+
 ## How to
-
-### Basic info
-
-- Download URL: https://keinos.github.io/Phar_Box3_installer/installer.php
-- [Checksums (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-- [View source](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
 ### Simple way
 

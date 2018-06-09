@@ -14,13 +14,14 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 - Se ejecuta si es un Phar válido.
 - Intenta cambiar el modo ejecutable.
 
+## Información Básica
+
+- **Descarga:** https://keinos.github.io/Phar_Box3_installer/installer.php
+    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sig
+- **Código fuente:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
+- **Manifesto:** https://keinos.github.io/Phar_Box3_installer/manifest.json
+
 ## Cómo
-
-### Información Básica
-
-- URL de descarga: https://keinos.github.io/Phar_Box3_installer/installer.php
-- [Suma de verificación (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-- [Ver código fuente](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
 ### Forma simple
 

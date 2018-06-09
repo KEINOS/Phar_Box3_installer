@@ -14,13 +14,14 @@ PHP アーカイバー「Box3」（`box.phar`）自体は [humbug/box リポジ�
 - 起動可能な `Phar` であるか、簡単なテストを行います。
 - ダウンロードしたファイルのアクセス権（実行権限）を変更します。
 
+## 基本情報
+
+- **Download:** https://keinos.github.io/Phar_Box3_installer/installer.php
+    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sig
+- **Source code:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
+- **Manifest:** https://keinos.github.io/Phar_Box3_installer/manifest.json
+
 ## How to
-
-### 基本情報
-
-- ダウンロード URL: https://keinos.github.io/Phar_Box3_installer/installer.php
-- [チェックサム (MD5, SHA1, SHA256, SHA512)](https://keinos.github.io/Phar_Box3_installer/manifest.json)
-- [ソースコードを見る](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php)
 
 ### 簡単な方法
 
