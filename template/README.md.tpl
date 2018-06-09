@@ -20,6 +20,7 @@ Though this installer does the following to help you and provide an alternative 
     - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sig
 - **Source code:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifest:** https://keinos.github.io/Phar_Box3_installer/manifest.json
+    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sig
 
 ## How to
 
