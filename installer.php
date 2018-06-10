@@ -212,16 +212,16 @@ namespace
             'header' => 'User-Agent: ' . $name_ua,
         ],
     ];
-    $context       = stream_context_create($options);
-    $json_releases = file_get_contents($url_release_box, false, $context);
+    $context      = stream_context_create($options);
+    $str_releases = file_get_contents($url_release_box, false, $context);
 
     echo " - Reading releases...$n";
 
-    $array_releases  = json_decode($json_releases);
-    $latest          = $array_releases[0];
+    $json_releases   = json_decode($str_releases);
+    $latest          = $json_releases[0];
     $latest->version = Parser::toVersion($latest->tag_name);
 
-    foreach ($array_releases as $item) {
+    foreach ($json_releases as $item) {
         echo "\t", 'Release: ', $item->tag_name;
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
