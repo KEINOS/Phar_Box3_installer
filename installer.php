@@ -33,6 +33,8 @@ namespace
     const EXIT_ON_FAIL = true;
     const DO_NOT_EXIT  = false;
 
+    defined('STDIN') or define('STDIN',fopen("php://stdin","r"));
+
     $n        = PHP_EOL;
     $name_app = 'box.phar';
     $name_ua  = 'humbug/box.phar downloader'; //User-Agent
