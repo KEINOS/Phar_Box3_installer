@@ -33,6 +33,7 @@ namespace
     $n        = PHP_EOL;
     $name_app = 'box.phar';
     $name_ua  = 'humbug/box.phar downloader'; //User-Agent
+    $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -211,17 +212,16 @@ namespace
             'header' => 'User-Agent: ' . $name_ua,
         ],
     ];
-    $context      = stream_context_create($options);
-    $release_url  = 'https://api.github.com/repos/humbug/box/releases';
-    $release_json = file_get_contents($release_url, false, $context);
+    $context       = stream_context_create($options);
+    $json_releases = file_get_contents($url_release_box, false, $context);
 
     echo " - Reading releases...$n";
 
-    $release_info    = json_decode($release_json);
-    $latest          = $release_info[0];
+    $array_releases  = json_decode($json_releases);
+    $latest          = $array_releases[0];
     $latest->version = Parser::toVersion($latest->tag_name);
 
-    foreach ($release_info as $item) {
+    foreach ($array_releases as $item) {
         echo "\t", 'Release: ', $item->tag_name;
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
