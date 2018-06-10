@@ -29,7 +29,7 @@ PHP アーカイバー「Box3」（`box.phar`）自体は [humbug/box リポジ�
 以下のワンライナーを実行して、カレント・ディレクトリに `box.phar` をインストールします。
 
 ```
-$ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
+curl -H 'Cache-Control: no-cache' -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 ```
 
 ![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0730.gif)
@@ -40,7 +40,7 @@ $ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 
 ```
 php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
-php -r "if (hash_file('sha256', 'installer.php') === '15319447b2bd4373168641ca057b38de92e551c6819a9f1bb565196211ed69a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha256', 'installer.php') === '2cbdfcfbfab1b0d5940302052884d16bf1aba15bdf06e55b09f9bbd9f04a3879') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php installer.php
 php -r "unlink('installer.php');"
 ```

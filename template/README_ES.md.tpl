@@ -29,7 +29,7 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 Ejecute el siguiente "one-liner" para instalar el `box.phar` en su directorio actual.
 
 ```
-$ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
+curl -H 'Cache-Control: no-cache' -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 ```
 
 ![How to install box.phar via installer](https://keinos.github.io/Phar_Box3_installer/img/howto-install-20180427-0730.gif)
