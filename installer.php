@@ -32,6 +32,7 @@ namespace
 
     $n        = PHP_EOL;
     $name_app = 'box.phar';
+    $name_ua  = 'humbug/box.phar downloader'; //User-Agent
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -202,12 +203,12 @@ namespace
     echo "--------$n";
     echo $n;
 
-    echo " - Downloading releases...$n";
+    echo " - Fetching releases ...$n";
 
     $options = [
         'http' => [
             'method' => 'GET',
-            'header' => 'User-Agent: humbug/box.phar downloader',
+            'header' => 'User-Agent: ' . $name_ua,
         ],
     ];
     $context      = stream_context_create($options);
