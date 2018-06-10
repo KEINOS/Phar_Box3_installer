@@ -30,10 +30,16 @@ namespace
 
     /* Initialization ------------------------------------------------------- */
 
+    const EXIT_ON_FAIL = true;
+    const DO_NOT_EXIT  = false;
+
     $n        = PHP_EOL;
     $name_app = 'box.phar';
     $name_ua  = 'humbug/box.phar downloader'; //User-Agent
     $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
+    $url_manifest     = 'https://keinos.github.io/Phar_Box3_installer/manifest.json';
+    $url_manifest_sig = 'https://keinos.github.io/Phar_Box3_installer/manifest.json.sig';
+    $hash_algo_base   = 'sha256';
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -105,8 +111,7 @@ namespace
         'Notice: The "openssl" extension will be needed to sign with private keys.',
         function () {
             return extension_loaded('openssl');
-        },
-        false
+        }
     );
 
     // check phar readonly setting
@@ -115,8 +120,7 @@ namespace
         'Notice: The "phar.readonly" setting needs to be off to create Phars.',
         function () {
             return (false == ini_get('phar.readonly'));
-        },
-        false
+        }
     );
 
     // check detect unicode setting
@@ -168,23 +172,25 @@ namespace
     }
 
     // check apc cli caching
-    if (!defined('HHVM_VERSION') && !extension_loaded('apcu') && extension_loaded('apc')) {
+    if (! defined('HHVM_VERSION') && ! extension_loaded('apcu') && extension_loaded('apc')) {
         check(
             'The "apc.enable_cli" setting is off.',
             'Notice: The "apc.enable_cli" is on and may cause problems with Phars.',
             function () {
                 return (false == ini_get('apc.enable_cli'));
-            },
-            false
+            }
         );
     }
 
     // ask to continue if check fail
     if ($hasNoErrors) {
-        echo "{$n}Everything seems good!$n$n";
+        echo $n;
+        echo 'Everything seems good!', $n;
+        echo $n;
     } else {
-        echo "{$n}You need to fix above error in order to use BOX3.$n";
-        echo " - Path to your php.ini: " . php_ini_loaded_file() . "$n";
+        echo $n;
+        echo 'You need to fix above error in order to use BOX3.', $n;
+        echo ' - Path to your php.ini: ', php_ini_loaded_file(), $n;
         echo $n;
 
         if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
@@ -200,8 +206,8 @@ namespace
 
     $hasNoErrors = true; //reset flag
 
-    echo "Download$n";
-    echo "--------$n";
+    echo 'Download', $n;
+    echo '--------', $n;
     echo $n;
 
     echo " - Fetching releases ...$n";
@@ -236,20 +242,44 @@ namespace
         }
     }
 
-    echo $n, "\t", 'Latest release -> ', Dumper::toString($latest->version);
+    $version_latest = Dumper::toString($latest->version);
+
+    echo $n, "\t", 'Latest release -> ', $version_latest;
     echo $n, $n;
 
     check(
-        "Application to download \t... found",
-        "Application to download \t... NOT found",
+        "Application to download ... Found.(v{$version_latest})",
+        "Application to download ... NOT found",
         function () use ($latest, $name_app) {
             $asset            = $latest->assets[0];
             $has_name_app     = ($asset->name === $name_app);
             $has_url_download = isset($asset->browser_download_url);
 
-            return ($latest) && $has_name_app && $has_url_download ;
+            return $latest && $has_name_app && $has_url_download ;
         }
     );
+
+    echo ' - Fetching manifest ... ';
+
+    if (! $string_manifest = file_get_contents($url_manifest)) {
+        dieMsg('Can not fetch manifest.');
+    }
+    $json_manifest = json_decode($string_manifest);
+    $hash_manifest = hash($hash_algo_base, $string_manifest);
+    echo 'OK', $n;
+
+    echo "\t - Fetching manifest signature ... ";
+    if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
+        dieMsg('Can NOT fetch manifest\s signature.');
+    }
+    echo 'OK', $n;
+
+    echo "\t - Validating manifest ... ";
+    if ($hash_manifest !== $string_manifest_sig) {
+        dieMsg('Invalid manifest file. Signature does not match');
+    }
+    echo 'OK.(Valid manifest)', $n;
+
 
     echo " - Downloading Box v", Dumper::toString($latest->version), " ... ";
 
@@ -260,15 +290,39 @@ namespace
         file_get_contents($browser_download_url, false, $context)
     )) ? 'OK': 'FAIL! Can not put file. Check dir permission.', $n;
 
-/*
+
     echo " - Checking file checksum...$n";
 
-    if ($item->sha1 !== sha1_file($item->name)) {
-        unlink($name_app);
+    check(
+        "{$name_app} successfuly downloaded",
+        "The downloaded file was corrupted.(Deleted)",
+        function () use ($name_app, $json_manifest, $version_latest) {
+            $n = PHP_EOL;
+            $algos_to_check = ['md5','sha256'];
+            $result         = true; // Flag of verification
+            foreach ($algos_to_check as $algo) {
+                $hash_manifest = fetchHashFromManifest(
+                    $json_manifest,
+                    $version_latest,
+                    $algo
+                );
+                $hash_download = hash($algo, $name_app);
+                /*
+                echo $hash_manifest, $n;
+                echo $hash_download, $n;
+                */
+                $result = ($hash_manifest === $hash_download) && $result;
+            }
 
-        echo " x The download was corrupted.$n";
-    }
-*/
+            if (! $result) {
+                echo ' - Deleting downloaded file ... ';
+                echo (unlink($name_app)) ? 'OK (Unlinked)' : 'NG (Can not unlink)', $n;
+            }
+
+            return $result;
+        },
+        EXIT_ON_FAIL
+    );
 
     echo " - Checking if valid Phar \t... ";
 
@@ -300,9 +354,9 @@ namespace
      * @param string   $success   The success message.
      * @param string   $failure   The failure message.
      * @param callable $condition The condition to check.
-     * @param boolean  $exit      Exit on failure?
+     * @param boolean  $exit      Exit on failure? EXIT_ON_FAIL or DO_NOT_EXIT
      */
-    function check($success, $failure, $condition, $exit = true)
+    function check($success, $failure, $condition, $exit = DO_NOT_EXIT)
     {
         global $n, $hasNoErrors;
 
@@ -313,7 +367,7 @@ namespace
         } else {
             echo ' * ', $failure, $n;
 
-            if ($exit) {
+            if (EXIT_ON_FAIL === $exit) {
                 exit(1);
             }
         }
@@ -321,6 +375,12 @@ namespace
         $hasNoErrors = $hasNoErrors && $result;
 
         return ($result);
+    }
+
+    function fetchHashFromManifest($json_manifest, $version, $hash_algo)
+    {
+        $release = $json_manifest->box_release->$version;
+        return  $release->hashes->$hash_algo;
     }
 
     function askToContinue($question, $stringToContinue)
