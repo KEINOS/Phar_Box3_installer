@@ -28,7 +28,10 @@ namespace
     use Herrera\Version\Dumper;
     use Herrera\Version\Parser;
 
-    $n = PHP_EOL;
+    /* Initialization ------------------------------------------------------- */
+
+    $n        = PHP_EOL;
+    $name_app = 'box.phar';
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -199,7 +202,6 @@ namespace
     echo "--------$n";
     echo $n;
 
-    // Retrieve manifest
     echo " - Downloading releases...$n";
 
     $options = [
@@ -236,14 +238,14 @@ namespace
     echo $n, "\t", 'Latest release -> ', Dumper::toString($latest->version);
     echo $n, $n;
 
-    $name_app = 'box.phar';
     check(
         "Application to download \t... found",
         "Application to download \t... NOT found",
         function () use ($latest, $name_app) {
-            $asset = $latest->assets[0];
-            $has_name_app = ($asset->name === $name_app);
+            $asset            = $latest->assets[0];
+            $has_name_app     = ($asset->name === $name_app);
             $has_url_download = isset($asset->browser_download_url);
+
             return ($latest) && $has_name_app && $has_url_download ;
         }
     );
@@ -288,6 +290,8 @@ namespace
     );
 
     echo $n, 'Box installed!', $n, $n;
+
+    /* Function ------------------------------------------------------------- */
 
     /**
      * Checks a condition, outputs a message, and exits if failed.
