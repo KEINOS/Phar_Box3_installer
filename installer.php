@@ -7,17 +7,17 @@
  *
  * - Issues: https://github.com/KEINOS/Phar_Box3_installer/issues
  * - Latest download url: https://github.com/KEINOS/Phar_Box3_installer
- * - By: KEINOS https://github.com/KEINOS/
+ * - By: KEINOS @ https://github.com/KEINOS/
  *
  * ## About Box3
- * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) by
- * https://github.com/humbug .
+ * Box3 is a fork of Box2 ( https://github.com/box-project/box2 ) mantained by
+ * https://github.com/humbug/box .
  *
  * ## About this script
  * This script is a fork of Box2's installer and customized for Box3.
  *
  * - Original installer (Box2)
- *     https://box-project.github.io/box2/installer.php
+ *     https://github.com/box-project/box2/blob/gh-pages/installer.php
  *
  */
 
@@ -28,7 +28,18 @@ namespace
     use Herrera\Version\Dumper;
     use Herrera\Version\Parser;
 
-    $n = PHP_EOL;
+    /* Initialization ------------------------------------------------------- */
+
+    const EXIT_ON_FAIL = true;
+    const DO_NOT_EXIT  = false;
+
+    $n        = PHP_EOL;
+    $name_app = 'box.phar';
+    $name_ua  = 'humbug/box.phar downloader'; //User-Agent
+    $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
+    $url_manifest     = 'https://keinos.github.io/Phar_Box3_installer/manifest.json';
+    $url_manifest_sig = 'https://keinos.github.io/Phar_Box3_installer/manifest.json.sig';
+    $hash_algo_base   = 'sha256';
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -41,23 +52,36 @@ namespace
         }
     );
 
+    /* Title ---------------------------------------------------------------- */
+
+    echo $n;
+    echo "=============$n";
     echo "Box Installer$n";
-    echo "=============$n$n";
+    echo "=============$n";
+    echo $n;
+
+    /* Environment check ---------------------------------------------------- */
 
     echo "Environment Check$n";
-    echo "-----------------$n$n";
+    echo "-----------------$n";
+    echo $n;
 
     echo "\"-\" indicates success.$n";
-    echo "\"*\" indicates error.$n$n";
+    echo "\"*\" indicates error.  $n";
+    echo $n;
+
+    $hasNoErrors = true; //truns false on error
 
     // check version
     check(
-        'You have a supported version of PHP (>= 5.3.3).',
+        'You have a supported min version of PHP (>= 5.3.3).',
         'You need PHP 5.3.3 or greater.',
         function () {
             return version_compare(PHP_VERSION, '5.3.3', '>=');
         }
     );
+
+    // ask whether use BOX2 or not if  =< 7.1.0
 
     // check phar extension
     check(
@@ -73,7 +97,7 @@ namespace
         'You have a supported version of the "phar" extension.',
         'You need a newer version of the "phar" extension (>=2.0).',
         function () {
-            if(! extension_loaded('phar')){
+            if (! extension_loaded('phar')) {
                 return false;
             }
             $phar = new ReflectionExtension('phar');
@@ -87,8 +111,7 @@ namespace
         'Notice: The "openssl" extension will be needed to sign with private keys.',
         function () {
             return extension_loaded('openssl');
-        },
-        false
+        }
     );
 
     // check phar readonly setting
@@ -97,8 +120,7 @@ namespace
         'Notice: The "phar.readonly" setting needs to be off to create Phars.',
         function () {
             return (false == ini_get('phar.readonly'));
-        },
-        false
+        }
     );
 
     // check detect unicode setting
@@ -150,42 +172,62 @@ namespace
     }
 
     // check apc cli caching
-    if (!defined('HHVM_VERSION') && !extension_loaded('apcu') && extension_loaded('apc')) {
+    if (! defined('HHVM_VERSION') && ! extension_loaded('apcu') && extension_loaded('apc')) {
         check(
             'The "apc.enable_cli" setting is off.',
             'Notice: The "apc.enable_cli" is on and may cause problems with Phars.',
             function () {
                 return (false == ini_get('apc.enable_cli'));
-            },
-            false
+            }
         );
     }
 
-    echo "{$n}Everything seems good!$n$n";
+    // ask to continue if check fail
+    if ($hasNoErrors) {
+        echo $n;
+        echo 'Everything seems good!', $n;
+        echo $n;
+    } else {
+        echo $n;
+        echo 'You need to fix above error in order to use BOX3.', $n;
+        echo ' - Path to your php.ini: ', php_ini_loaded_file(), $n;
+        echo $n;
 
-    echo "Download$n";
-    echo "--------$n$n";
+        if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
+            echo "{$n}Exit BOX3 installer.$n$n";
 
-    // Retrieve manifest
-    echo " - Downloading releases...$n";
+            exit(1);
+        }
+
+        echo "Continuing ...$n$n";
+    }
+
+    /* Download ------------------------------------------------------------- */
+
+    $hasNoErrors = true; //reset flag
+
+    echo 'Download', $n;
+    echo '--------', $n;
+    echo $n;
+
+    echo " - Fetching releases ...$n";
 
     $options = [
         'http' => [
             'method' => 'GET',
-            'header' => 'User-Agent: humbug/box.phar downloader',
+            'header' => 'User-Agent: ' . $name_ua,
         ],
     ];
-    $context      = stream_context_create($options);    
-    $release_url  = 'https://api.github.com/repos/humbug/box/releases';
-    $release_json = file_get_contents($release_url, false, $context);
+    $context      = stream_context_create($options);
+    $str_releases = file_get_contents($url_release_box, false, $context);
 
     echo " - Reading releases...$n";
 
-    $release_info    = json_decode($release_json);
-    $latest          = $release_info[0];
+    $json_releases   = json_decode($str_releases);
+    $latest          = $json_releases[0];
     $latest->version = Parser::toVersion($latest->tag_name);
 
-    foreach ($release_info as $item) {
+    foreach ($json_releases as $item) {
         echo "\t", 'Release: ', $item->tag_name;
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
@@ -200,61 +242,111 @@ namespace
         }
     }
 
-    echo $n, "\t", 'Latest release -> ', Dumper::toString($latest->version), $n;
+    $version_latest = Dumper::toString($latest->version);
 
-    $name_app = 'box.phar';
+    echo $n, "\t", 'Latest release -> ', $version_latest;
+    echo $n, $n;
+
     check(
-        'Application download was found',
-        'No application download was found',
-        function () {
-            global $latest, $name_app;
-            $asset = $latest->assets[0];
-            $has_name_app = ($asset->name === $name_app);
+        "Application to download ... Found.(v{$version_latest})",
+        "Application to download ... NOT found",
+        function () use ($latest, $name_app) {
+            $asset            = $latest->assets[0];
+            $has_name_app     = ($asset->name === $name_app);
             $has_url_download = isset($asset->browser_download_url);
-            return ($latest) && $has_name_app && $has_url_download ;
+
+            return $latest && $has_name_app && $has_url_download ;
         }
     );
 
-    echo " - Downloading Box v", Dumper::toString($latest->version), " ...$n";
-    
+    echo ' - Fetching manifest ... ';
+
+    if (! $string_manifest = file_get_contents($url_manifest)) {
+        dieMsg('Can not fetch manifest.');
+    }
+    $json_manifest = json_decode($string_manifest);
+    $hash_manifest = hash($hash_algo_base, $string_manifest);
+    echo 'OK', $n;
+
+    echo "\t - Fetching manifest signature ... ";
+    if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
+        dieMsg('Can NOT fetch manifest\s signature.');
+    }
+    echo 'OK', $n;
+
+    echo "\t - Validating manifest ... ";
+    if ($hash_manifest !== $string_manifest_sig) {
+        dieMsg('Invalid manifest file. Signature does not match');
+    }
+    echo 'OK.(Valid manifest)', $n;
+
+
+    echo " - Downloading Box v", Dumper::toString($latest->version), " ... ";
+
     $browser_download_url = $latest->assets[0]->browser_download_url;
-    file_put_contents(
+
+    echo ( file_put_contents(
         $name_app,
         file_get_contents($browser_download_url, false, $context)
-    );
+    )) ? 'OK': 'FAIL! Can not put file. Check dir permission.', $n;
 
-/*
+
     echo " - Checking file checksum...$n";
 
-    if ($item->sha1 !== sha1_file($item->name)) {
-        unlink($name_app);
+    check(
+        "{$name_app} successfuly downloaded",
+        "The downloaded file was corrupted.(Deleted)",
+        function () use ($name_app, $json_manifest, $version_latest) {
+            $n = PHP_EOL;
+            $algos_to_check = ['md5','sha256'];
+            $result         = true; // Flag of verification
+            foreach ($algos_to_check as $algo) {
+                $hash_manifest = fetchHashFromManifest(
+                    $json_manifest,
+                    $version_latest,
+                    $algo
+                );
+                $hash_download = hash($algo, $name_app);
+                /*
+                echo $hash_manifest, $n;
+                echo $hash_download, $n;
+                */
+                $result = ($hash_manifest === $hash_download) && $result;
+            }
 
-        echo " x The download was corrupted.$n";
-    }
-*/
+            if (! $result) {
+                echo ' - Deleting downloaded file ... ';
+                echo (unlink($name_app)) ? 'OK (Unlinked)' : 'NG (Can not unlink)', $n;
+            }
 
-    echo ' - Checking if valid Phar ... ';
+            return $result;
+        },
+        EXIT_ON_FAIL
+    );
+
+    echo " - Checking if valid Phar \t... ";
 
     try {
         new Phar($name_app);
-        echo 'OK.', $n;
+        echo 'OK', $n;
     } catch (Exception $e) {
-        echo 'NG! The Phar is not valid.', $n;
+        echo 'FAIL! The Phar is not valid.', $n;
 
         throw $e;
     }
 
     // `chmod` installer
     check(
-        'Making Box executable ...',
-        'Can NOT make Box executable ...Plase change mode as executable manually.',
-        function () {
-            global $name_app;
+        "Making Box executable \t... OK",
+        "Making Box executable \t... FAIL! Check dir/file permission.",
+        function () use ($name_app) {
             return chmod($name_app, 0755);
         }
     );
 
     echo $n, 'Box installed!', $n, $n;
+
+    /* Function ------------------------------------------------------------- */
 
     /**
      * Checks a condition, outputs a message, and exits if failed.
@@ -262,21 +354,40 @@ namespace
      * @param string   $success   The success message.
      * @param string   $failure   The failure message.
      * @param callable $condition The condition to check.
-     * @param boolean  $exit      Exit on failure?
+     * @param boolean  $exit      Exit on failure? EXIT_ON_FAIL or DO_NOT_EXIT
      */
-    function check($success, $failure, $condition, $exit = true)
+    function check($success, $failure, $condition, $exit = DO_NOT_EXIT)
     {
-        global $n;
+        global $n, $hasNoErrors;
 
-        if ($condition()) {
+        $result = $condition();
+
+        if ($result) {
             echo ' - ', $success, $n;
         } else {
             echo ' * ', $failure, $n;
 
-            if ($exit) {
+            if (EXIT_ON_FAIL === $exit) {
                 exit(1);
             }
         }
+
+        $hasNoErrors = $hasNoErrors && $result;
+
+        return ($result);
+    }
+
+    function fetchHashFromManifest($json_manifest, $version, $hash_algo)
+    {
+        $release = $json_manifest->box_release->$version;
+        return  $release->hashes->$hash_algo;
+    }
+
+    function askToContinue($question, $stringToContinue)
+    {
+        echo $question . ':';
+        $stdin = trim(fgets(STDIN));
+        return $stringToContinue === $stdin;
     }
 }
 
