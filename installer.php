@@ -33,7 +33,7 @@ namespace
     const EXIT_ON_FAIL = true;
     const DO_NOT_EXIT  = false;
 
-    defined('STDIN') or define('STDIN',fopen("php://stdin","r"));
+    defined('STDIN') or define('STDIN', fopen("php://stdin", "r"));
 
     $n        = PHP_EOL;
     $name_app = 'box.phar';
@@ -196,8 +196,9 @@ namespace
         echo $n;
 
         if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
-            echo "{$n}Exit BOX3 installer.$n$n";
-
+            echo 'Installation aborted.', $n;
+            echo $n;
+            echo 'Exit BOX3 installer.', $n,$n;
             exit(1);
         }
 
@@ -207,23 +208,29 @@ namespace
     /* Download ------------------------------------------------------------- */
 
     $hasNoErrors = true; //reset flag
-
-    echo 'Download', $n;
-    echo '--------', $n;
-    echo $n;
-
-    echo " - Fetching releases ...$n";
-
     $options = [
         'http' => [
             'method' => 'GET',
             'header' => 'User-Agent: ' . $name_ua,
         ],
     ];
-    $context      = stream_context_create($options);
-    $str_releases = file_get_contents($url_release_box, false, $context);
+    $context = stream_context_create($options);
 
-    echo " - Reading releases...$n";
+    echo 'Download', $n;
+    echo '--------', $n;
+    echo $n;
+
+    check(
+        "Fetching releases \t... OK",
+        'Notice: Couldn\'t fetch releases from: ' . $url_release_box,
+        function () use (&$str_releases, $url_release_box, $context) {
+            $str_releases = file_get_contents($url_release_box, false, $context);
+            return ! empty(trim($str_releases));
+        },
+        EXIT_ON_FAIL
+    );
+
+    echo " - Reading releases:$n";
 
     $json_releases   = json_decode($str_releases);
     $latest          = $json_releases[0];
@@ -250,8 +257,8 @@ namespace
     echo $n, $n;
 
     check(
-        "Application to download ... Found.(v{$version_latest})",
-        "Application to download ... NOT found",
+        "Application to download \t... Found.(v{$version_latest})",
+        "Application to download \t... NOT found",
         function () use ($latest, $name_app) {
             $asset            = $latest->assets[0];
             $has_name_app     = ($asset->name === $name_app);
@@ -261,7 +268,7 @@ namespace
         }
     );
 
-    echo ' - Fetching manifest ... ';
+    echo " - Fetching manifest file to verify \t... ";
 
     if (! $string_manifest = file_get_contents($url_manifest)) {
         dieMsg('Can not fetch manifest.');
@@ -270,45 +277,45 @@ namespace
     $hash_manifest = hash($hash_algo_base, $string_manifest);
     echo 'OK', $n;
 
-    echo "\t - Fetching manifest signature ... ";
+    echo "\t - Fetching manifest signature \t... ";
     if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
         dieMsg('Can NOT fetch manifest\s signature.');
     }
     echo 'OK', $n;
 
-    echo "\t - Validating manifest ... ";
+    echo "\t - Validating manifest \t... ";
     if ($hash_manifest !== $string_manifest_sig) {
         dieMsg('Invalid manifest file. Signature does not match');
     }
     echo 'OK.(Valid manifest)', $n;
 
 
-    echo " - Downloading Box v", Dumper::toString($latest->version), " ... ";
+    echo " - Downloading latest Box\t... ";
 
     $browser_download_url = $latest->assets[0]->browser_download_url;
 
     echo ( file_put_contents(
         $name_app,
         file_get_contents($browser_download_url, false, $context)
-    )) ? 'OK': 'FAIL! Can not put file. Check dir permission.', $n;
-
-
-    echo " - Checking file checksum...$n";
+    )) ? 'OK -> ' . $name_app : 'FAIL! Can not put file. Check dir permission.', $n;
 
     check(
-        "{$name_app} successfuly downloaded",
+        "Box successfuly downloaded! \t${version_latest} -> {$name_app}",
         "The downloaded file was corrupted.(Deleted)",
         function () use ($name_app, $json_manifest, $version_latest) {
-            $n = PHP_EOL;
+            echo " - Checking file signature \t... ";
+
+            $n              = PHP_EOL;
             $algos_to_check = ['md5','sha256'];
             $result         = true; // Flag of verification
+
             foreach ($algos_to_check as $algo) {
                 $hash_manifest = fetchHashFromManifest(
                     $json_manifest,
                     $version_latest,
                     $algo
                 );
-                $hash_download = hash($algo, $name_app);
+                $hash_download = hash_file($algo, $name_app);
                 /*
                 echo $hash_manifest, $n;
                 echo $hash_download, $n;
@@ -317,22 +324,24 @@ namespace
             }
 
             if (! $result) {
+                echo 'NG', $n;
                 echo ' - Deleting downloaded file ... ';
                 echo (unlink($name_app)) ? 'OK (Unlinked)' : 'NG (Can not unlink)', $n;
             }
+
+            echo 'OK', $n;
 
             return $result;
         },
         EXIT_ON_FAIL
     );
 
-    echo " - Checking if valid Phar \t... ";
-
+    echo " - Instance creation test \t... ";
     try {
         new Phar($name_app);
         echo 'OK', $n;
     } catch (Exception $e) {
-        echo 'FAIL! The Phar is not valid.', $n;
+        echo 'FAIL! Can\'t create Phar instance.', $n;
 
         throw $e;
     }
@@ -345,6 +354,7 @@ namespace
             return chmod($name_app, 0755);
         }
     );
+
 
     echo $n, 'Box installed!', $n, $n;
 
@@ -388,7 +398,7 @@ namespace
     function askToContinue($question, $stringToContinue)
     {
         echo $question . ':';
-        $stdin = trim(fgets(STDIN));
+        $stdin = trim(fgets(STDIN)) ?: $stringToContinue;
         return $stringToContinue === $stdin;
     }
 }
