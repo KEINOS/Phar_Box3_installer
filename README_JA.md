@@ -40,7 +40,7 @@ curl -H 'Cache-Control: no-cache' -LSs https://keinos.github.io/Phar_Box3_instal
 
 ```
 php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
-php -r "if (hash_file('sha256', 'installer.php') === '2cbdfcfbfab1b0d5940302052884d16bf1aba15bdf06e55b09f9bbd9f04a3879') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha256', 'installer.php') === '2cbdfcfbfab1b0d5940302052884d16bf1aba15bdf06e55b09f9bbd9f04a3879') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('installer.php'); } echo PHP_EOL;"
 php installer.php
 php -r "unlink('installer.php');"
 ```
