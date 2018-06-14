@@ -30,8 +30,11 @@ namespace
 
     /* Initialization ------------------------------------------------------- */
 
-    const EXIT_ON_FAIL = true;
-    const DO_NOT_EXIT  = false;
+    const EXIT_ON_FAIL   = true;
+    const DO_NOT_EXIT    = false;
+    const RETURN_AS_ECHO = false;
+    const DO_NOT_ECHO    = true;
+    const DEFAULT_WIDTH_SCREEN = 80;
 
     defined('STDIN') or define('STDIN', fopen("php://stdin", "r"));
 
@@ -56,23 +59,21 @@ namespace
 
     /* Title ---------------------------------------------------------------- */
 
-    echo $n;
-    echo "=============$n";
-    echo "Box Installer$n";
-    echo "=============$n";
+    echoHeading('Box Installer', 'h1');
+    
     echo $n;
 
     /* Environment check ---------------------------------------------------- */
 
-    echo "Environment Check$n";
-    echo "-----------------$n";
+    echoHeading('Environment Check', 'h2');
+
     echo $n;
 
     echo "\"-\" indicates success.$n";
     echo "\"*\" indicates error.  $n";
     echo $n;
 
-    $hasNoErrors = true; //truns false on error
+    $has_no_errors = true; //truns false on error
 
     // check version
     check(
@@ -185,7 +186,7 @@ namespace
     }
 
     // ask to continue if check fail
-    if ($hasNoErrors) {
+    if ($has_no_errors) {
         echo $n;
         echo 'Everything seems good!', $n;
         echo $n;
@@ -207,7 +208,7 @@ namespace
 
     /* Download ------------------------------------------------------------- */
 
-    $hasNoErrors = true; //reset flag
+    $has_no_errors = true; //reset flag
     $options = [
         'http' => [
             'method' => 'GET',
@@ -216,8 +217,7 @@ namespace
     ];
     $context = stream_context_create($options);
 
-    echo 'Download', $n;
-    echo '--------', $n;
+    echoHeading('Downlaod Box', 'h2');
     echo $n;
 
     check(
@@ -362,10 +362,10 @@ namespace
 
     /**
      * Ask user to continue via standard input.
-     * 
+     *
      * @param  string $question         The message to display.
      * @param  string $stringToContinue The expected string to continue.
-     * @return boolean                  True if input equal to $stringToContinue             
+     * @return boolean                  True if input equal to $stringToContinue
      */
     function askToContinue($question, $stringToContinue)
     {
@@ -384,7 +384,7 @@ namespace
      */
     function check($success, $failure, $condition, $exit = DO_NOT_EXIT)
     {
-        global $n, $hasNoErrors;
+        global $n, $has_no_errors;
 
         $result = $condition();
 
@@ -398,9 +398,63 @@ namespace
             }
         }
 
-        $hasNoErrors = $hasNoErrors && $result;
+        $has_no_errors = $has_no_errors && $result;
 
         return ($result);
+    }
+
+    /**
+     * Draw/return horizontal line.
+     *
+     * @param  string  $line_char  Single character of a line
+     * @param  integer $line_width Line width(length) to draw
+     * @param  bool    $return     Echoes result if false
+     */
+    function drawHR($line_char, $line_width, $return = RETURN_AS_ECHO)
+    {
+        $result = str_repeat($line_char, $line_width) . PHP_EOL;
+
+        if ($return) {
+            return $result;
+        }
+
+        echo $result;
+    }
+
+    function echoHeading($message, $head_level)
+    {
+        $message = trim((string) $message);
+        $indent  = ' ';
+        $result  = '';
+
+        switch ($head_level) {
+            case 'h1':
+                $hr       = drawHR('=', fetchScreenWidth(), DO_NOT_ECHO);
+                $result  .= $hr . $indent . $message . PHP_EOL . $hr;
+                break;
+            case 'h2':
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('=', strlen($message), DO_NOT_ECHO);
+                $result  .= $hr . $message . PHP_EOL .$hr;
+                break;
+            case 'h3':
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('=', strlen($message), DO_NOT_ECHO);
+                $result  .= $message . PHP_EOL . $hr;
+                break;
+            default:
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('-', strlen($message), DO_NOT_ECHO);
+                $result  .= $message . PHP_EOL . $hr;
+                break;
+        }
+
+        echo $result;
+    }
+
+    function execCmd($command)
+    {
+        return exec($command);
     }
 
     function fetchHashFromManifest($json_manifest, $version, $hash_algo)
@@ -409,6 +463,31 @@ namespace
         return  $release->hashes->$hash_algo;
     }
 
+    function fetchScreenWidth()
+    {
+        static $width_screen;
+
+        if (isset($width_screen)) {
+            return $width_screen;
+        }
+
+        if (! isCLI()) {
+            echo 'This script must be run via command line.', PHP_EOL;
+            exit(1);
+        }
+
+        $width        = trim(execCmd('tput cols'));
+        $width_screen = is_numeric($width) ? $width : DEFAULT_WIDTH_SCREEN;
+
+        return $width_screen;
+    }
+
+    function isCLI()
+    {
+        $name_sapi = strtolower(php_sapi_name());
+
+        return ( 'cli' === substr($name_sapi, 0, 3) );
+    }
 }
 
 namespace Herrera\Version\Exception
