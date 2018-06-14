@@ -200,7 +200,7 @@ namespace
             echo 'Installation aborted.', $n;
             echo $n;
             echo 'Exit BOX3 installer.', $n,$n;
-            exit(1);
+            exit(0);
         }
 
         echo "Continuing ...$n$n";
@@ -357,6 +357,8 @@ namespace
 
 
     echo $n, 'Box installed!', $n, $n;
+    
+    exit(0);
 
     /* Function ------------------------------------------------------------- */
 
