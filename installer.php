@@ -30,12 +30,16 @@ namespace
 
     /* Initialization ------------------------------------------------------- */
 
-    const EXIT_ON_FAIL = true;
-    const DO_NOT_EXIT  = false;
+    const EXIT_ON_FAIL   = true;
+    const DO_NOT_EXIT    = false;
+    const RETURN_AS_ECHO = false;
+    const DO_NOT_ECHO    = true;
+    const DEFAULT_WIDTH_SCREEN = 80;
 
     defined('STDIN') or define('STDIN', fopen("php://stdin", "r"));
 
-    $n        = PHP_EOL;
+    $n = PHP_EOL;
+    $t = "\t";
     $name_app = 'box.phar';
     $name_ua  = 'humbug/box.phar downloader'; //User-Agent
     $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
@@ -46,8 +50,10 @@ namespace
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
             if ($code & error_reporting()) {
-                echo "$n{$n}Error: $message$n$n";
-                echo "{$n}BackTrace:{$n}";
+                echo $n, $n;
+                echo 'Error: ', $message, $n;
+                echo $n, $n;
+                echo 'BackTrace:', $n;
                 echo 'Line:', debug_backtrace()[0]['line'], $n;
                 exit(1);
             }
@@ -56,23 +62,19 @@ namespace
 
     /* Title ---------------------------------------------------------------- */
 
-    echo $n;
-    echo "=============$n";
-    echo "Box Installer$n";
-    echo "=============$n";
+    echoHeading('Box Installer', 'h1');
     echo $n;
 
     /* Environment check ---------------------------------------------------- */
 
-    echo "Environment Check$n";
-    echo "-----------------$n";
+    echoHeading('Environment Check', 'h2');
     echo $n;
 
-    echo "\"-\" indicates success.$n";
-    echo "\"*\" indicates error.  $n";
+    echo '"-" indicates success.', $n;
+    echo '"*" indicates error.', $n;
     echo $n;
 
-    $hasNoErrors = true; //truns false on error
+    $has_no_errors = true; //truns false on error
 
     // check version
     check(
@@ -185,7 +187,7 @@ namespace
     }
 
     // ask to continue if check fail
-    if ($hasNoErrors) {
+    if ($has_no_errors) {
         echo $n;
         echo 'Everything seems good!', $n;
         echo $n;
@@ -196,18 +198,17 @@ namespace
         echo $n;
 
         if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
-            echo 'Installation aborted.', $n;
-            echo $n;
-            echo 'Exit BOX3 installer.', $n,$n;
-            exit(1);
+            echo 'Installation aborted.', $n, $n;
+            echo 'Exit BOX3 installer.', $n, $n;
+            exit(0);
         }
 
-        echo "Continuing ...$n$n";
+        echo 'Continuing ...', $n, $n;
     }
 
     /* Download ------------------------------------------------------------- */
 
-    $hasNoErrors = true; //reset flag
+    $has_no_errors = true; //reset flag
     $options = [
         'http' => [
             'method' => 'GET',
@@ -216,12 +217,11 @@ namespace
     ];
     $context = stream_context_create($options);
 
-    echo 'Download', $n;
-    echo '--------', $n;
+    echoHeading('Downlaod Box', 'h2');
     echo $n;
 
     check(
-        "Fetching releases \t... OK",
+        "Fetching releases {$t}... OK",
         'Notice: Couldn\'t fetch releases from: ' . $url_release_box,
         function () use (&$str_releases, $url_release_box, $context) {
             $str_releases = file_get_contents($url_release_box, false, $context);
@@ -230,14 +230,14 @@ namespace
         EXIT_ON_FAIL
     );
 
-    echo " - Reading releases:$n";
+    echo ' - Reading releases:', $n;
 
     $json_releases   = json_decode($str_releases);
     $latest          = $json_releases[0];
     $latest->version = Parser::toVersion($latest->tag_name);
 
     foreach ($json_releases as $item) {
-        echo "\t", 'Release: ', $item->tag_name;
+        echo $t, 'Release: ', $item->tag_name;
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
             continue;
@@ -253,12 +253,12 @@ namespace
 
     $version_latest = Dumper::toString($latest->version);
 
-    echo $n, "\t", 'Latest release -> ', $version_latest;
-    echo $n, $n;
+    echo $n;
+    echo $t, 'Latest release -> ', $version_latest, $n, $n;
 
     check(
-        "Application to download \t... Found.(v{$version_latest})",
-        "Application to download \t... NOT found",
+        "Application to download {$t}... Found.(v{$version_latest})",
+        "Application to download {$t}... NOT found",
         function () use ($latest, $name_app) {
             $asset            = $latest->assets[0];
             $has_name_app     = ($asset->name === $name_app);
@@ -268,7 +268,7 @@ namespace
         }
     );
 
-    echo " - Fetching manifest file to verify \t... ";
+    echo " - Fetching manifest file to verify {$t}... ";
 
     if (! $string_manifest = file_get_contents($url_manifest)) {
         dieMsg('Can not fetch manifest.');
@@ -277,20 +277,20 @@ namespace
     $hash_manifest = hash($hash_algo_base, $string_manifest);
     echo 'OK', $n;
 
-    echo "\t - Fetching manifest signature \t... ";
+    echo $t, " - Fetching manifest signature {$t}... ";
     if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
         dieMsg('Can NOT fetch manifest\s signature.');
     }
     echo 'OK', $n;
 
-    echo "\t - Validating manifest \t... ";
+    echo $t, " - Validating manifest {$t}... ";
     if ($hash_manifest !== $string_manifest_sig) {
         dieMsg('Invalid manifest file. Signature does not match');
     }
     echo 'OK.(Valid manifest)', $n;
 
 
-    echo " - Downloading latest Box\t... ";
+    echo " - Downloading latest Box{$t}... ";
 
     $browser_download_url = $latest->assets[0]->browser_download_url;
 
@@ -300,10 +300,10 @@ namespace
     )) ? 'OK -> ' . $name_app : 'FAIL! Can not put file. Check dir permission.', $n;
 
     check(
-        "Box successfuly downloaded! \t${version_latest} -> {$name_app}",
+        "Box successfuly downloaded! {$t}{$version_latest} -> {$name_app}",
         "The downloaded file was corrupted.(Deleted)",
-        function () use ($name_app, $json_manifest, $version_latest) {
-            echo " - Checking file signature \t... ";
+        function () use ($name_app, $json_manifest, $version_latest, $t) {
+            echo " - Checking file signature {$t}... ";
 
             $n              = PHP_EOL;
             $algos_to_check = ['md5','sha256'];
@@ -316,27 +316,23 @@ namespace
                     $algo
                 );
                 $hash_download = hash_file($algo, $name_app);
-                /*
-                echo $hash_manifest, $n;
-                echo $hash_download, $n;
-                */
                 $result = ($hash_manifest === $hash_download) && $result;
             }
 
-            if (! $result) {
-                echo 'NG', $n;
-                echo ' - Deleting downloaded file ... ';
-                echo (unlink($name_app)) ? 'OK (Unlinked)' : 'NG (Can not unlink)', $n;
-            }
+            echo ($result) ? 'OK' : 'NG', $n;
 
-            echo 'OK', $n;
+            if (! $result) {
+                echo ' - Deleting downloaded file ... ';
+                echo (unlink($name_app)) ? 'Done (Unlinked)' : 'Fail (Can\'t unlink)';
+                echo $n;
+            }
 
             return $result;
         },
         EXIT_ON_FAIL
     );
 
-    echo " - Instance creation test \t... ";
+    echo " - Instance creation test {$t}... ";
     try {
         new Phar($name_app);
         echo 'OK', $n;
@@ -348,8 +344,8 @@ namespace
 
     // `chmod` installer
     check(
-        "Making Box executable \t... OK",
-        "Making Box executable \t... FAIL! Check dir/file permission.",
+        "Making Box executable {$t}... OK",
+        "Making Box executable {$t}... FAIL! Check dir/file permission.",
         function () use ($name_app) {
             return chmod($name_app, 0755);
         }
@@ -358,7 +354,23 @@ namespace
 
     echo $n, 'Box installed!', $n, $n;
 
+    exit(0);
+
     /* Function ------------------------------------------------------------- */
+
+    /**
+     * Ask user to continue via standard input.
+     *
+     * @param  string $question         The message to display.
+     * @param  string $stringToContinue The expected string to continue.
+     * @return boolean                  True if input equal to $stringToContinue
+     */
+    function askToContinue($question, $stringToContinue)
+    {
+        echo $question . ':';
+        $stdin = trim(fgets(STDIN)) ?: $stringToContinue;
+        return $stringToContinue === $stdin;
+    }
 
     /**
      * Checks a condition, outputs a message, and exits if failed.
@@ -370,7 +382,7 @@ namespace
      */
     function check($success, $failure, $condition, $exit = DO_NOT_EXIT)
     {
-        global $n, $hasNoErrors;
+        global $n, $has_no_errors;
 
         $result = $condition();
 
@@ -384,9 +396,69 @@ namespace
             }
         }
 
-        $hasNoErrors = $hasNoErrors && $result;
+        $has_no_errors = $has_no_errors && $result;
 
         return ($result);
+    }
+
+    function dieMsg($msg)
+    {
+        echo (string) $msg, $n;
+        exit(1);
+    }
+
+    /**
+     * Draw/return horizontal line.
+     *
+     * @param  string  $line_char  Single character of a line
+     * @param  integer $line_width Line width(length) to draw
+     * @param  bool    $return     Echoes result if false
+     */
+    function drawHR($line_char, $line_width, $return = RETURN_AS_ECHO)
+    {
+        $result = str_repeat($line_char, $line_width) . PHP_EOL;
+
+        if ($return) {
+            return $result;
+        }
+
+        echo $result;
+    }
+
+    function echoHeading($message, $head_level)
+    {
+        $message = trim((string) $message);
+        $indent  = ' ';
+        $result  = '';
+
+        switch ($head_level) {
+            case 'h1':
+                $hr       = drawHR('=', fetchScreenWidth(), DO_NOT_ECHO);
+                $result  .= $hr . $indent . $message . PHP_EOL . $hr;
+                break;
+            case 'h2':
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('=', strlen($message), DO_NOT_ECHO);
+                $result  .= $hr . $message . PHP_EOL .$hr;
+                break;
+            case 'h3':
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('=', strlen($message), DO_NOT_ECHO);
+                $result  .= $message . PHP_EOL . $hr;
+                break;
+            default:
+                $message  = $indent . $message . $indent;
+                $hr       = drawHR('-', strlen($message), DO_NOT_ECHO);
+                $result  .= $message . PHP_EOL . $hr;
+                break;
+        }
+
+        echo $result;
+    }
+
+    function execCmd($command)
+    {
+        return exec($command);
     }
 
     function fetchHashFromManifest($json_manifest, $version, $hash_algo)
@@ -395,11 +467,30 @@ namespace
         return  $release->hashes->$hash_algo;
     }
 
-    function askToContinue($question, $stringToContinue)
+    function fetchScreenWidth()
     {
-        echo $question . ':';
-        $stdin = trim(fgets(STDIN)) ?: $stringToContinue;
-        return $stringToContinue === $stdin;
+        static $width_screen;
+
+        if (isset($width_screen)) {
+            return $width_screen;
+        }
+
+        if (! isCLI()) {
+            echo 'This script must be run via command line.', PHP_EOL;
+            exit(1);
+        }
+
+        $width        = trim(execCmd('tput cols'));
+        $width_screen = is_numeric($width) ? $width : DEFAULT_WIDTH_SCREEN;
+
+        return $width_screen;
+    }
+
+    function isCLI()
+    {
+        $name_sapi = strtolower(php_sapi_name());
+
+        return ( 'cli' === substr($name_sapi, 0, 3) );
     }
 }
 
