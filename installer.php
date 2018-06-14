@@ -361,6 +361,20 @@ namespace
     /* Function ------------------------------------------------------------- */
 
     /**
+     * Ask user to continue via standard input.
+     * 
+     * @param  string $question         The message to display.
+     * @param  string $stringToContinue The expected string to continue.
+     * @return boolean                  True if input equal to $stringToContinue             
+     */
+    function askToContinue($question, $stringToContinue)
+    {
+        echo $question . ':';
+        $stdin = trim(fgets(STDIN)) ?: $stringToContinue;
+        return $stringToContinue === $stdin;
+    }
+
+    /**
      * Checks a condition, outputs a message, and exits if failed.
      *
      * @param string   $success   The success message.
@@ -395,12 +409,6 @@ namespace
         return  $release->hashes->$hash_algo;
     }
 
-    function askToContinue($question, $stringToContinue)
-    {
-        echo $question . ':';
-        $stdin = trim(fgets(STDIN)) ?: $stringToContinue;
-        return $stringToContinue === $stdin;
-    }
 }
 
 namespace Herrera\Version\Exception
