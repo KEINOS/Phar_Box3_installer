@@ -50,8 +50,10 @@ namespace
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
             if ($code & error_reporting()) {
-                echo "$n{$n}Error: $message$n$n";
-                echo "{$n}BackTrace:{$n}";
+                echo $n, $n;
+                echo 'Error: ', $message, $n;
+                echo $n, $n;
+                echo 'BackTrace:', $n;
                 echo 'Line:', debug_backtrace()[0]['line'], $n;
                 exit(1);
             }
@@ -68,8 +70,8 @@ namespace
     echoHeading('Environment Check', 'h2');
     echo $n;
 
-    echo "\"-\" indicates success.$n";
-    echo "\"*\" indicates error.  $n";
+    echo '"-" indicates success.', $n;
+    echo '"*" indicates error.', $n;
     echo $n;
 
     $has_no_errors = true; //truns false on error
@@ -196,13 +198,12 @@ namespace
         echo $n;
 
         if (! askToContinue('Continue download BOX3(box.phar) anyway? (y/n)', 'y')) {
-            echo 'Installation aborted.', $n;
-            echo $n;
-            echo 'Exit BOX3 installer.', $n,$n;
+            echo 'Installation aborted.', $n, $n;
+            echo 'Exit BOX3 installer.', $n, $n;
             exit(0);
         }
 
-        echo "Continuing ...$n$n";
+        echo 'Continuing ...', $n, $n;
     }
 
     /* Download ------------------------------------------------------------- */
@@ -229,7 +230,7 @@ namespace
         EXIT_ON_FAIL
     );
 
-    echo " - Reading releases:$n";
+    echo ' - Reading releases:', $n;
 
     $json_releases   = json_decode($str_releases);
     $latest          = $json_releases[0];
@@ -252,8 +253,8 @@ namespace
 
     $version_latest = Dumper::toString($latest->version);
 
-    echo $n, $t, 'Latest release -> ', $version_latest;
-    echo $n, $n;
+    echo $n;
+    echo $t, 'Latest release -> ', $version_latest, $n, $n;
 
     check(
         "Application to download {$t}... Found.(v{$version_latest})",
@@ -315,20 +316,16 @@ namespace
                     $algo
                 );
                 $hash_download = hash_file($algo, $name_app);
-                /*
-                echo $hash_manifest, $n;
-                echo $hash_download, $n;
-                */
                 $result = ($hash_manifest === $hash_download) && $result;
             }
 
-            if (! $result) {
-                echo 'NG', $n;
-                echo ' - Deleting downloaded file ... ';
-                echo (unlink($name_app)) ? 'OK (Unlinked)' : 'NG (Can not unlink)', $n;
-            }
+            echo ($result) ? 'OK' : 'NG', $n;
 
-            echo 'OK', $n;
+            if (! $result) {
+                echo ' - Deleting downloaded file ... ';
+                echo (unlink($name_app)) ? 'Done (Unlinked)' : 'Fail (Can\'t unlink)';
+                echo $n;
+            }
 
             return $result;
         },
@@ -402,6 +399,12 @@ namespace
         $has_no_errors = $has_no_errors && $result;
 
         return ($result);
+    }
+
+    function dieMsg($msg)
+    {
+        echo (string) $msg, $n;
+        exit(1);
     }
 
     /**
