@@ -38,7 +38,8 @@ namespace
 
     defined('STDIN') or define('STDIN', fopen("php://stdin", "r"));
 
-    $n        = PHP_EOL;
+    $n = PHP_EOL;
+    $t = "\t";
     $name_app = 'box.phar';
     $name_ua  = 'humbug/box.phar downloader'; //User-Agent
     $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
@@ -60,13 +61,11 @@ namespace
     /* Title ---------------------------------------------------------------- */
 
     echoHeading('Box Installer', 'h1');
-    
     echo $n;
 
     /* Environment check ---------------------------------------------------- */
 
     echoHeading('Environment Check', 'h2');
-
     echo $n;
 
     echo "\"-\" indicates success.$n";
@@ -221,7 +220,7 @@ namespace
     echo $n;
 
     check(
-        "Fetching releases \t... OK",
+        "Fetching releases {$t}... OK",
         'Notice: Couldn\'t fetch releases from: ' . $url_release_box,
         function () use (&$str_releases, $url_release_box, $context) {
             $str_releases = file_get_contents($url_release_box, false, $context);
@@ -237,7 +236,7 @@ namespace
     $latest->version = Parser::toVersion($latest->tag_name);
 
     foreach ($json_releases as $item) {
-        echo "\t", 'Release: ', $item->tag_name;
+        echo $t, 'Release: ', $item->tag_name;
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
             continue;
@@ -253,12 +252,12 @@ namespace
 
     $version_latest = Dumper::toString($latest->version);
 
-    echo $n, "\t", 'Latest release -> ', $version_latest;
+    echo $n, $t, 'Latest release -> ', $version_latest;
     echo $n, $n;
 
     check(
-        "Application to download \t... Found.(v{$version_latest})",
-        "Application to download \t... NOT found",
+        "Application to download {$t}... Found.(v{$version_latest})",
+        "Application to download {$t}... NOT found",
         function () use ($latest, $name_app) {
             $asset            = $latest->assets[0];
             $has_name_app     = ($asset->name === $name_app);
@@ -268,7 +267,7 @@ namespace
         }
     );
 
-    echo " - Fetching manifest file to verify \t... ";
+    echo " - Fetching manifest file to verify {$t}... ";
 
     if (! $string_manifest = file_get_contents($url_manifest)) {
         dieMsg('Can not fetch manifest.');
@@ -277,20 +276,20 @@ namespace
     $hash_manifest = hash($hash_algo_base, $string_manifest);
     echo 'OK', $n;
 
-    echo "\t - Fetching manifest signature \t... ";
+    echo $t, " - Fetching manifest signature {$t}... ";
     if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
         dieMsg('Can NOT fetch manifest\s signature.');
     }
     echo 'OK', $n;
 
-    echo "\t - Validating manifest \t... ";
+    echo $t, " - Validating manifest {$t}... ";
     if ($hash_manifest !== $string_manifest_sig) {
         dieMsg('Invalid manifest file. Signature does not match');
     }
     echo 'OK.(Valid manifest)', $n;
 
 
-    echo " - Downloading latest Box\t... ";
+    echo " - Downloading latest Box{$t}... ";
 
     $browser_download_url = $latest->assets[0]->browser_download_url;
 
@@ -300,10 +299,10 @@ namespace
     )) ? 'OK -> ' . $name_app : 'FAIL! Can not put file. Check dir permission.', $n;
 
     check(
-        "Box successfuly downloaded! \t${version_latest} -> {$name_app}",
+        "Box successfuly downloaded! {$t}{$version_latest} -> {$name_app}",
         "The downloaded file was corrupted.(Deleted)",
-        function () use ($name_app, $json_manifest, $version_latest) {
-            echo " - Checking file signature \t... ";
+        function () use ($name_app, $json_manifest, $version_latest, $t) {
+            echo " - Checking file signature {$t}... ";
 
             $n              = PHP_EOL;
             $algos_to_check = ['md5','sha256'];
@@ -336,7 +335,7 @@ namespace
         EXIT_ON_FAIL
     );
 
-    echo " - Instance creation test \t... ";
+    echo " - Instance creation test {$t}... ";
     try {
         new Phar($name_app);
         echo 'OK', $n;
@@ -348,8 +347,8 @@ namespace
 
     // `chmod` installer
     check(
-        "Making Box executable \t... OK",
-        "Making Box executable \t... FAIL! Check dir/file permission.",
+        "Making Box executable {$t}... OK",
+        "Making Box executable {$t}... FAIL! Check dir/file permission.",
         function () use ($name_app) {
             return chmod($name_app, 0755);
         }
@@ -357,7 +356,7 @@ namespace
 
 
     echo $n, 'Box installed!', $n, $n;
-    
+
     exit(0);
 
     /* Function ------------------------------------------------------------- */
