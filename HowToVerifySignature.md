@@ -2,9 +2,19 @@
 
 The '<file name>.sig' file is a signature to sign the '<file name>' file.
 
-It is signed with the author's (@KEINOS@Github) private key and it can be verify with he/she's [public key](https://github.com/KEINOS.keys) on GitHub.
+It is signed with the author's (@KEINOS@Github) private key and it can be verified with he/she's [public key](https://github.com/KEINOS.keys) on GitHub.
 
-```bash
+### How to verify a file with a signature
+
+Basic format to verify `<file name>` file with a public key and signature:
+
+```bash:basic format
+$ openssl dgst -sha1 -verify <PKCS8 public key> -signature <file name>.sig <file name>
+```
+
+Actual steps to verify `<file name>` file with the author's public key and the signature.
+
+```bash:full step
 $ # Fetch the first public key from GitHub
 $ curl -s https://github.com/KEINOS.keys | head -n 1 > KEINOS.pub
 $ 
@@ -16,7 +26,9 @@ $ openssl dgst -sha1 -verify KEINOS.pkcs8.pub -signature <file name>.sig <file n
 Verified OK
 ```
 
-By the way, here's my public key in `PKCS8` format.
+### Public key to verify
+
+By the way, here's the author's (@KEINOS@GitHub) public key in `PKCS8` format for convenience.
 
 ```text:KEINOS.pkcs8.pub
 -----BEGIN PUBLIC KEY-----
@@ -35,4 +47,9 @@ ti0zvVV+O1IjxmrQOECKP2UCAwEAAQ==
 -----END PUBLIC KEY-----
 ```
 
+### Tested with
+
+- macOS HighSierra: OSX 10.13.5
+- `openssl version`: LibreSSL 2.2.7
+- `curl --version`: curl 7.54.0 (x86_64-apple-darwin17.0) libcurl/7.54.0 LibreSSL/2.0.20 zlib/1.2.11 nghttp2/1.24.0
 
