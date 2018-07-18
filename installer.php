@@ -40,12 +40,13 @@ namespace
 
     $n = PHP_EOL;
     $t = "\t";
-    $name_app = 'box.phar';
-    $name_ua  = 'humbug/box.phar downloader'; //User-Agent
-    $url_release_box  = 'https://api.github.com/repos/humbug/box/releases';
-    $url_manifest     = 'https://keinos.github.io/Phar_Box3_installer/manifest.json';
-    $url_manifest_sig = 'https://keinos.github.io/Phar_Box3_installer/manifest.json.sig';
-    $hash_algo_base   = 'sha256';
+    $hash_algo_base    = 'sha256';
+    $name_app          = 'box.phar';
+    $name_ua           = 'humbug/box.phar downloader'; //User-Agent
+    $url_release_box   = 'https://api.github.com/repos/humbug/box/releases';
+    $url_github_base   = 'https://keinos.github.io/Phar_Box3_installer';
+    $url_manifest      = $url_github_base . '/manifest.json';
+    $url_manifest_hash = $url_github_base . '/manifest.json.' . $hash_algo_base;
 
     set_error_handler(
         function ($code, $message, $file, $line) use ($n) {
@@ -277,15 +278,15 @@ namespace
     $hash_manifest = hash($hash_algo_base, $string_manifest);
     echo 'OK', $n;
 
-    echo $t, " - Fetching manifest signature {$t}... ";
-    if (! $string_manifest_sig = file_get_contents($url_manifest_sig)) {
-        dieMsg('Can NOT fetch manifest\s signature.');
+    echo $t, " - Fetching manifest checksum {$t}... ";
+    if (! $string_manifest_hash = file_get_contents($url_manifest_hash)) {
+        dieMsg('Can NOT fetch manifest\s checksum.');
     }
     echo 'OK', $n;
 
     echo $t, " - Validating manifest {$t}... ";
-    if ($hash_manifest !== $string_manifest_sig) {
-        dieMsg('Invalid manifest file. Signature does not match');
+    if ($hash_manifest !== $string_manifest_hash) {
+        dieMsg('Invalid manifest file. Hash value does not match');
     }
     echo 'OK.(Valid manifest)', $n;
 
@@ -303,7 +304,7 @@ namespace
         "Box successfuly downloaded! {$t}{$version_latest} -> {$name_app}",
         "The downloaded file was corrupted.(Deleted)",
         function () use ($name_app, $json_manifest, $version_latest, $t) {
-            echo " - Checking file signature {$t}... ";
+            echo " - Checking file checksum {$t}... ";
 
             $n              = PHP_EOL;
             $algos_to_check = ['md5','sha256'];

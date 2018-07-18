@@ -17,10 +17,10 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 ## Información Básica
 
 - **Descarga:** https://keinos.github.io/Phar_Box3_installer/installer.php
-    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sha512
+    - **SHA256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sha256
 - **Código fuente:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifesto:** https://keinos.github.io/Phar_Box3_installer/manifest.json
-    - **SHA-256:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sha512
+    - **SHA256:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sha256
 
 ## Cómo
 
@@ -40,7 +40,7 @@ curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
 
 ```
 php -r "copy('https://keinos.github.io/Phar_Box3_installer/installer.php', 'installer.php');"
-php -r "if (hash_file('sha256', 'installer.php') === '14e7016d51666002cfabdd32e7b3a84eb5686a47beb590cc87cf446ea20e4acd') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('installer.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha256', 'installer.php') === '88ea16a2abfa275a380d61d785108ddefa6e6fd869b92e23f494316d250360c8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('installer.php'); } echo PHP_EOL;"
 php installer.php
 php -r "unlink('installer.php');"
 ```
