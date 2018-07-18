@@ -1,12 +1,12 @@
 ## About the signature file (`.sig` file)
 
-The '<file name>.sig' file is a signature to sign the '<file name>' file.
+The '`<file name>.sig`' file is a signature to sign the '`<file name>`' file.
 
 It is signed with the author's (@KEINOS@Github) private key and it can be verified with he/she's [public key](https://github.com/KEINOS.keys) on GitHub.
 
 ### How to verify a file with a signature
 
-Basic format to verify `<file name>` file with a public key and signature:
+Basic format to verify `<file name>` file with a public key and a signature:
 
 ```bash:basic format
 $ openssl dgst -sha1 -verify <PKCS8 public key> -signature <file name>.sig <file name>
