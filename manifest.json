@@ -2,7 +2,7 @@
     "name": "Box3 Installer manifest",
     "installer": {
         "name": "installer.php",
-        "size": 30638,
+        "size_file": 30638,
         "hashes": {
             "md5": "f44ae92760416ebad78b5006a7022ebe",
             "sha1": "f1be4711c619588540ffd58d9612b2bc1b4ee37d",
