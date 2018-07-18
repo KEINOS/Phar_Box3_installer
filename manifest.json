@@ -1,5 +1,14 @@
 {
     "name": "Box3 Installer manifest",
+    "signature": {
+        "name": "manifest.json.sig",
+        "target_file": "manifest.json",
+        "signer": "@KEINOS@GitHub",
+        "signer_public_key": "https:\/\/github.com\/KEINOS.keys",
+        "browser_download_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json.sig",
+        "about": "The 'manifest.json.sig' file is a signature file of 'manifest.json', signed with signer's private key('$ openssl dgst -sha1 -sign private_key manifest.json manifest.json.sig'). You can verify it with he\/she's longest public key on GitHub.('openssl dgst -sha1 -verify public_key.pkcs8 -signature manifest.json.sig manifest.json')",
+        "note": "Note that to verify the 'manifest.json' file with openssl command, you need to convert the public key (the longest one) in to 'pkcs8' format. ('$ ssh-keygen -f public_key -e -m pkcs8 > public_key.pkcs8')"
+    },
     "installer": {
         "name": "installer.php",
         "size_file": 30638,
