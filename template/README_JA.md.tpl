@@ -18,6 +18,7 @@ PHP アーカイバー「Box3」（`box.phar`）自体は [humbug/box リポジ�
 
 - **Download:** https://keinos.github.io/Phar_Box3_installer/installer.php
     - **%HASH_ALGO_UPPER%:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.%HASH_ALGO%
+    - **電子署名:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php.sig [[?](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/HowToVerifySignature.md)]
 - **Source code:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifest:** https://keinos.github.io/Phar_Box3_installer/manifest.json
     - **%HASH_ALGO_UPPER%:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.%HASH_ALGO%

@@ -18,9 +18,11 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 
 - **Descarga:** https://keinos.github.io/Phar_Box3_installer/installer.php
     - **SHA256:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.sha256
+    - **Firma electrónica:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php.sig [[?](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/HowToVerifySignature.md)]
 - **Código fuente:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifesto:** https://keinos.github.io/Phar_Box3_installer/manifest.json
     - **SHA256:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sha256
+    - **Firma electrónica:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sig [[?](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/HowToVerifySignature.md)]
 
 ## Cómo
 
