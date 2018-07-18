@@ -21,6 +21,7 @@ A pesar de ello, este instalador hace lo siguiente para ayudarlo y proporcionarl
 - **Código fuente:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifesto:** https://keinos.github.io/Phar_Box3_installer/manifest.json
     - **%HASH_ALGO_UPPER%:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.%HASH_ALGO%
+    - **Firma electrónica:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sig [[?](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/HowToVerifySignature.md)]
 
 ## Cómo
 

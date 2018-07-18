@@ -21,6 +21,7 @@ Though this installer does the following to help you and provide an alternative 
 - **Source code:** https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/installer.php
 - **Manifest:** https://keinos.github.io/Phar_Box3_installer/manifest.json
     - **%HASH_ALGO_UPPER%:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.%HASH_ALGO%
+    - **Signature:** https://github.com/KEINOS/Phar_Box3_installer/blob/gh-pages/manifest.json.sig [[?](https://github.com/KEINOS/Phar_Box3_installer/blob/Box3_installer/HowToVerifySignature.md)]
 
 ## How to
 
