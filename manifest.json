@@ -2,12 +2,12 @@
     "name": "Box3 Installer manifest",
     "installer": {
         "name": "installer.php",
-        "size": 30577,
+        "size": 30638,
         "hashes": {
-            "md5": "22edf00ba1f1eac659f265b0c6c941d9",
-            "sha1": "9d4d1abf30d5059cc14010a3a1ada1c5f333b0c6",
-            "sha256": "14e7016d51666002cfabdd32e7b3a84eb5686a47beb590cc87cf446ea20e4acd",
-            "sha512": "af804dc4016952f99d7b770c8751e6605f7fcf5dae1f5912dca67f0ed8d712091a171aa6c4c67acd0601d7a84015b320e869666b4ef806075e0d31f3a4a36bef"
+            "md5": "f44ae92760416ebad78b5006a7022ebe",
+            "sha1": "f1be4711c619588540ffd58d9612b2bc1b4ee37d",
+            "sha256": "88ea16a2abfa275a380d61d785108ddefa6e6fd869b92e23f494316d250360c8",
+            "sha512": "d5a15d9ed36e65f72de73e29778602b8c0141376b4c6c2522c83a36335ecafbf8be4cc893334036607dd96ee19aab404e82c03c4241d62598ab51f9c005eee91"
         },
         "master_branch_url": "https:\/\/raw.githubusercontent.com\/KEINOS\/Phar_Box3_installer\/Box3_installer\/installer.php",
         "browser_download_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/installer.php",
