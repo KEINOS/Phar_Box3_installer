@@ -16,7 +16,7 @@ Este script hace lo siguiente:
 
 - Por supuesto, puedes descargarlo desde su [página de lanzamiento](https://github.com/humbug/box/releases) directamente.
 
-Para instalar Box3, simplemente ejecute el "one-liner" siguiente y instalará el `box.phar` en su directorio actual.
+Para **instalar Box3**, simplemente ejecute el "one-liner" siguiente y instalará el `box.phar` en su directorio actual.
 
 ```bash
 curl -LSs https://keinos.github.io/Phar_Box3_installer/installer.php | php
