@@ -4,7 +4,7 @@
 
 # 簡単 Box3 インストーラ（humbug/box）
 
-[humbug/box](https://github.com/humbug/box) による PHP アーカイバー「Box3」（`box.phar`）のダウンロード／インストールするスクリプトです。
+[humbug/box](https://github.com/humbug/box) による PHP アーカイバー「Box3」（`box.phar`）をダウンロード／インストールするスクリプトです。
 
 このスクリプトは以下を行います：
 
