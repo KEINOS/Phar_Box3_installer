@@ -9,7 +9,7 @@ Este es un script que descarga e instala el "Box3" (`box.phar`), el archivador d
 Este script hace lo siguiente:
 
 1. Comprueba los requisitos mínimos para ejecutar "`box.phar`". (No verifica todos los requisitos. Consulte el [asunto #4](https://github.com/KEINOS/Phar_Box3_installer/issues/4).)
-2. Se **descarga el más nuevo "`box.phar`"** des de la [página de lanzamiento] de la cabeza de familia. (En https://github.com/humbug/box/releases)
+2. Se **descarga el más nuevo "`box.phar`"** des de la [página de lanzamiento](https://github.com/humbug/box/releases) de la cabeza de familia. (En https://github.com/humbug/box/releases)
 3. Valida la suma de comprobación (el "checksum") para verificar si el archivo descargado no está curvado.
 4. Se ejecuta si es un `Phar` válido.
 5. Intenta cambiar el modo ejecutable.
