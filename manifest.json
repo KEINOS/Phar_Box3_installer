@@ -23,6 +23,18 @@
         "manifest_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json"
     },
     "box_release": {
+        "3.0.0": {
+            "name": "box.phar",
+            "tag": "3.0.0",
+            "size_file": 2060069,
+            "hashes": {
+                "md5": "42942c6f9cdcf20d1c1092c50a3de34d",
+                "sha1": "808c4779fff05e02c079130e54f3d1cca220701e",
+                "sha256": "397f012cae0e7124cc2f949daa45cef594bfe2784c700fe33724dea43ce89777",
+                "sha512": "122b2b4188ffc5c4f0dd06b348bb3bf848c393dfd3e0b28dcdcd2e26ab8b44b2ff5c560c2b1f839ee28f2220e6a3898c566c72dae2cf1fdc5c81b9c90069405c"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0\/box.phar"
+        },
         "3.0.0-RC.0": {
             "name": "box.phar",
             "tag": "3.0.0-RC.0",
