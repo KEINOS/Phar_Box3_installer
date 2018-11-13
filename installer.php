@@ -234,7 +234,7 @@ namespace
     echo ' - Reading releases:', $n;
 
     $json_releases   = json_decode($str_releases);
-    $latest          = $json_releases[0];
+    $latest          = $json_releases[count($json_releases)-1];
     $latest->version = Parser::toVersion($latest->tag_name);
 
     foreach ($json_releases as $item) {
@@ -242,6 +242,10 @@ namespace
         if ($item->draft) {
             echo ' -> Skip (Draft)', $n;
             continue;
+        }
+        if (! isset($item->assets[0])){
+            echo ' -> Skip (No Official bin found.)', $n;
+            continue;            
         }
         echo $n;
         $item->version = Parser::toVersion($item->tag_name);
