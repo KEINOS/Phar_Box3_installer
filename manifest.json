@@ -23,6 +23,54 @@
         "manifest_url": "https:\/\/keinos.github.io\/Phar_Box3_installer\/manifest.json"
     },
     "box_release": {
+        "3.8.4": {
+            "name": "box.phar",
+            "tag": "3.8.4",
+            "size_file": 1937691,
+            "hashes": {
+                "md5": "ea932d6c3135aa2bd93e9a3f4cbcbbfe",
+                "sha1": "275060e2ffda89cac560bf1cf3cbc9a9fe427a19",
+                "sha256": "f2058b50b126f1e9e811538ef2688cdbf578ae24f881de6d32a5f30c4eb6e3fb",
+                "sha512": "408d6137c217012f9b581e90266d8a9afa723ef46568380eee452fd64989bbe78565002df8fc140758affa41b83d1bc0168242daad153fb17663f850a3ea1f34"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.8.4\/box.phar"
+        },
+        "3.8.3": {
+            "name": "box.phar",
+            "tag": "3.8.3",
+            "size_file": 2036920,
+            "hashes": {
+                "md5": "2947253e4c562e64ac24e357ec6b2245",
+                "sha1": "4eb85525492976945f763073f1c2687781a32f60",
+                "sha256": "c3e5e8ca5e72566e36879fc6e2f77350b5cb11b93d2f9202c24ca59f9bc40623",
+                "sha512": "8ac1af2ae1686e652969eb1660154ec5ec5f90a8da83515617a900be5645258861b6ffd86d1d6bdbbd2dda89e2b29008d0efe2fb72aabd8f228b0c042f986acd"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.8.3\/box.phar"
+        },
+        "3.8.2": {
+            "name": "box.phar",
+            "tag": "3.8.2",
+            "size_file": 2038669,
+            "hashes": {
+                "md5": "59e48f99f0ceec17f2f3e14eedbacc5c",
+                "sha1": "c4a8512cb0cf856295fddbb782140c7108ddadc7",
+                "sha256": "8ea9b68e3556ca86b9aeb1e5f55993bfd3cadd088b8c7afd0c98ac953b825763",
+                "sha512": "435fec98d30abc63e324257e64d306c79b33a4b31fb523ec7797c1586bc0e35828a30a2884ac2f0bfe3a823a48819d17476a1aa9081404e35c4cb25da78b0c08"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.8.2\/box.phar"
+        },
+        "3.8.1": {
+            "name": "box.phar",
+            "tag": "3.8.1",
+            "size_file": 2033945,
+            "hashes": {
+                "md5": "623ccfdababd2deeb19b13b5ae5508fe",
+                "sha1": "cdcfc07e5a3fe75cf677c07db727ae25c7673b26",
+                "sha256": "ada60768da4ff22a4e9a613f40a4ded4833fb3ec445fd5feba09bcdfbcab1927",
+                "sha512": "5e7855be0013797e05a451776eaa1be80702147fd8ad8b616e2ced18002f2582d8e6234f1b2054ae82b175f109300cd9d6855391d803e7613afa51dfab007109"
+            },
+            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.8.1\/box.phar"
+        },
         "3.8.0": {
             "name": "box.phar",
             "tag": "3.8.0",
@@ -298,42 +346,6 @@
                 "sha512": "3e4cc6291f2f4a16e3c52cbfa67bfa97ef5a63bce936a5d8ac2f3e8b1d6fb212629d77d25145b06f3156ce6d86dba0525738d201fdce9304f9c989524f6d045f"
             },
             "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.5\/box.phar"
-        },
-        "3.0.0-alpha.4": {
-            "name": "box.phar",
-            "tag": "3.0.0-alpha.4",
-            "size_file": 1699375,
-            "hashes": {
-                "md5": "8450a9fa272bc9cd0593f837e64aff97",
-                "sha1": "3570cc93f0d6156da9196bc1910f2f1167566e55",
-                "sha256": "47f9c5c8dad0b37e70ec5f8d31dce0f133cf38a33bb677c16b45cea80fe2e47d",
-                "sha512": "1afcf73956f7bccf550e40d55364d07c2c433be138b025b3162b3960456a89c128003cdabda3accf44fcba6c1499120d22b1a523fda6af68adef3c9b4c346b21"
-            },
-            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.4\/box.phar"
-        },
-        "3.0.0-alpha.3": {
-            "name": "box.phar",
-            "tag": "3.0.0-alpha.3",
-            "size_file": 1719017,
-            "hashes": {
-                "md5": "95dd65309ede400733e1cf1749416642",
-                "sha1": "398293fb8d67ac550960f2ac99f8cb0099fb50fc",
-                "sha256": "50485767123ae1a0044c6897a46d5600b990181eb9d8fb627793ce1edfdfca30",
-                "sha512": "9607e4992e3415c6aa88dc31e29dc2be978ec1ca7bb4dfca5edb5a60a87cc25148eb8fbcaaaffce5476f78eeeaaff743ffcd199ae5581d4faa4794d034856562"
-            },
-            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.3\/box.phar"
-        },
-        "3.0.0-alpha.2": {
-            "name": "box.phar",
-            "tag": "3.0.0-alpha.2",
-            "size_file": 1730396,
-            "hashes": {
-                "md5": "63cb5b7a3c417fbf8105b50775b9ff3d",
-                "sha1": "38b475958bced9ac2bf103e0bc55650b7ee33e34",
-                "sha256": "8c577bd421dead841569485d2ab370253427a62786eb23a89f49fb3c2ec5859a",
-                "sha512": "16f3868832db0ee385b8511da7a17eef1c656c809fa69be6a17eb31110969d563a074274e0b0b5dca6cec3c4d6a8b47c65e40e6f523a8ee80205632d7f9c010a"
-            },
-            "browser_download_url": "https:\/\/github.com\/humbug\/box\/releases\/download\/3.0.0-alpha.2\/box.phar"
         }
     }
 }
